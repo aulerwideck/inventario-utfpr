@@ -9,7 +9,7 @@ O arquivo deve ser no formato csv no seguinte formato:
 ````
 LOCAL; ;TOMBO;TOMBO_ANTIGO;NOME_RESPONSAVEL;DESCRIÇÃO_DO_ITEM
 ````
-[Exemplo](https://opensource.org/licenses/MIT).
+[Exemplo](https://github.com/aulerwideck/inventario-utfpr/blob/master/public/uploads/example.csv).
 Obs.: Entre o campo Local e Tombo, possui um espaço em branco.
 
 
