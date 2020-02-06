@@ -7,20 +7,21 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <div class="col-12 col-sm-5 col-md-4">
+                            <div class="col-12 col-sm-6 col-md-3">
                                 <a href="{{ route('inventory.show', ['inventory' => $local->inventory()->first()]) }}"
                                    class="btn btn-primary btn-block">Voltar</a>
                             </div>
-{{--                            <div class="d-none d-lg-block col-lg-4"></div>--}}
-{{--                            <div class="d-none d-md-block d-lg-none col-md-4"></div>--}}
-{{--                            <div class="d-block d-sm-none"><br></div>--}}
-                            <div class="col-12 col-sm-5 col-md-4">
+                            <div class="col-12 col-sm-6 col-md-3">
                                 <button class="btn btn-secondary btn-block" onclick="openFormAntigo()">Tombo Antigo
                                 </button>
                             </div>
-                            <div class="col-12 col-sm-5 col-md-4">
-                                <button class="btn btn-secondary btn-block" onclick="openFormSemPatrimonio()">Itens sem
-                                    patrimonio
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <button class="btn btn-secondary btn-block" onclick="openFormProep()">Item PROEP
+                                </button>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <button class="btn btn-secondary btn-block" onclick="openFormSemPatrimonio()">Item sem
+                                    patrimônio
                                 </button>
                             </div>
                         </div>
@@ -29,35 +30,28 @@
                 <br>
                 <div class="card">
                     <div class="card-header">Coleta - {{$local->value}}</div>
-
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form method="POST" id="collectform" action="{{route ('inventory.store')}}"
+                        <form method="POST" id="collectform" action="#"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="row justify-content-center">
-                                <div class="col-12 col-md-4">
-                                    <label for="search">Tombo</label>
-                                </div>
+                                <div class="col-12 col-md-4"><label for="search">SIORG</label></div>
                                 <div class="col-12 col-md-8">
-                                    <input id="search"
-                                           name="search"
-                                           type="text"
-                                           class="form-control @error('search') is-invalid @enderror"
-                                           required
+                                    <input id="search" name="search" type="text"
+                                           class="form-control @error('search') is-invalid @enderror" required
                                            autofocus>
                                 </div>
                                 @error('search')
                                 <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-
+                            <br>
                             <div class="d-block d-sm-none">
-                                <br>
                                 <div class="row justify-content-center">
                                     <div class="col-12 col-sm-4">
                                         <input type="submit" class="btn btn-success btn-block" value="Buscar"><br>
@@ -66,10 +60,7 @@
                             </div>
                         </form>
                         <div class="col-12 col-md-8">
-                            <input id="local_id"
-                                   name="local_id"
-                                   type="number"
-                                   value="{{$local->id}}"
+                            <input id="local_id" name="local_id" type="number" value="{{$local->id}}"
                                    style="display: none">
                         </div>
                     </div>
@@ -96,11 +87,7 @@
                                     <label for="tombo">Tombo</label>
                                 </div>
                                 <div class="col-12 col-md-8">
-                                    <input id="tombo"
-                                           name="tombo"
-                                           type="text"
-                                           class="form-control @error('tombo') is-invalid @enderror"
-                                           disabled>
+                                    <input id="tombo" name="tombo" type="text" class="form-control @error('tombo') is-invalid @enderror" disabled>
                                 </div>
                                 @error('tombo')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -112,10 +99,7 @@
                                     <label for="tombo_old">Tombo Antigo</label>
                                 </div>
                                 <div class="col-12 col-md-8">
-                                    <input id="tombo_old"
-                                           name="tombo_old"
-                                           type="text"
-                                           class="form-control @error('tombo_old') is-invalid @enderror">
+                                    <input id="tombo_old" name="tombo_old" type="text" class="form-control @error('tombo_old') is-invalid @enderror">
                                 </div>
                                 @error('tombo_old')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -127,11 +111,7 @@
                                     <label for="description">Descrição</label>
                                 </div>
                                 <div class="col-12 col-md-8">
-                                    <textarea id="description"
-                                              name="description"
-                                              rows="4"
-                                              cols="20"
-                                              class="form-control @error('description') is-invalid @enderror"></textarea>
+                                    <textarea id="description" name="description" rows="4" cols="20" class="form-control @error('description') is-invalid @enderror"></textarea>
                                 </div>
                                 @error('description')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -143,11 +123,7 @@
                                     <label for="observation">Observação</label>
                                 </div>
                                 <div class="col-12 col-md-8">
-                                    <textarea id="observation"
-                                              name="observation"
-                                              rows="4"
-                                              cols="20"
-                                              class="form-control @error('observation') is-invalid @enderror"></textarea>
+                                    <textarea id="observation" name="observation" rows="4" cols="20" class="form-control @error('observation') is-invalid @enderror"></textarea>
                                 </div>
                                 @error('observation')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -159,9 +135,7 @@
                                     <label for="responsible">Responsável</label>
                                 </div>
                                 <div class="col-12 col-md-8">
-                                    <select disabled name="responsible" id="responsible"
-                                            class="form-control selectpicker"
-                                            data-live-search="true" data-size="5">
+                                    <select disabled name="responsible" id="responsible" class="form-control selectpicker" data-live-search="true" data-size="5">
                                         <option value="0"></option>
                                         @foreach($responsibles as $responsible)
                                             <option value="{{ $responsible->id}}">
@@ -177,8 +151,7 @@
                                     <label for="state">Estado</label>
                                 </div>
                                 <div class="col-12 col-md-8">
-                                    <select name="state" id="state" class="form-control selectpicker"
-                                            data-live-search="true" data-size="5">
+                                    <select name="state" id="state" class="form-control selectpicker" data-live-search="true" data-size="5">
                                         <option value="0"></option>
                                         @foreach($states as $state)
                                             <option value="{{ $state->id}}">
@@ -204,16 +177,18 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-6 card">
                 <div class="card-body">
-                    <form method="POST" id="collect_antigo_form" action="{{route ('inventory.store')}}"
+                    <form method="POST" id="tombo_antigo_form" action="{{route ('inventory.store')}}"
                           enctype="multipart/form-data">
                         @csrf
+                        <input id="tombo_antigo_local_id" name="tombo_antigo_local_id" type="number" value="{{$local->id}}"
+                               style="display: none">
                         <div class="row justify-content-center">
                             <div style="display: none">
                                 <div class="col-6 col-md-4">
-                                    <label for="select">Tombo antigo?</label>
+                                    <label for="tombo_antigo_select">Tombo antigo?</label>
                                 </div>
                                 <div class="col-6 col-md-8">
-                                    <input type="checkbox" id="select-popup" name="select-popup" checked>
+                                    <input type="checkbox" id="tombo_antigo_select" name="tombo_antigo_select" checked>
                                 </div>
                             </div>
                             @error('search')
@@ -222,15 +197,11 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-12 col-md-4">
-                                <label for="search">Tombo</label>
+                                <label for="tombo_antigo_search">Tombo Antigo</label>
                             </div>
                             <div class="col-12 col-md-8">
-                                <input id="search-popup"
-                                       name="search-popup"
-                                       type="text"
-                                       class="form-control @error('search') is-invalid @enderror"
-                                       required
-                                       autofocus>
+                                <input id="tombo_antigo_search" name="tombo_antigo_search" type="text"
+                                       class="form-control @error('search') is-invalid @enderror" required autofocus>
                             </div>
                             @error('search')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -246,18 +217,8 @@
                             </div>
                         </div>
                     </form>
-                    <div class="col-12 col-md-8">
-                        <input id="local_id-popup"
-                               name="local_id-popup"
-                               type="number"
-                               value="{{$local->id}}"
-                               style="display: none">
-                    </div>
                     <br/>
                     <div class="row justify-content-center">
-                        <div class="col-12 col-sm-4">
-                            <input type="submit" class="btn btn-success btn-block" value="Salvar"><br>
-                        </div>
                         <div class="col-12 col-sm-4">
                             <input class="btn btn-danger btn-block" onclick="closeFormAntigo()" value="Cancelar"><br>
                         </div>
@@ -266,55 +227,45 @@
             </div>
         </div>
     </div>
-    <div class="col-12 form-popup" id="sem_patrimonio"><br>
+    <div class="col-12 form-popup" id="proep_pop_up"><br>
         <div class="row justify-content-center">
             <div class="col-12 col-lg-6 card">
                 <div class="card-body">
-                    <form method="POST" id="form" action="{{ route ('collect.store') }}"
+                    <form method="POST" id="form_proep" action="{{ route ('collect.store') }}"
                           enctype="multipart/form-data">
                         @csrf
-                        <input id="local_id"
-                               name="local_id"
-                               type="number"
-                               value="{{$local->id}}"
+                        <input id="local_id_proep" name="local_id_proep" type="number" value="{{$local->id}}"
                                style="display: none">
                         <div class="row justify-content-center">
                             <div class="col-12 col-md-4">
-                                <label for="tombo_old">Tombo Antigo</label>
+                                <label for="tombo_proep">PROEP</label>
                             </div>
                             <div class="col-12 col-md-8">
-                                <input id="tombo_old"
-                                       name="tombo_old"
-                                       type="text"
-                                       class="form-control @error('tombo_old') is-invalid @enderror">
+                                <input id="tombo_proep" name="tombo_proep" type="text" class="form-control @error('tombo_proep') is-invalid @enderror">
                             </div>
-                            @error('tombo_old')
+                            @error('tombo_proep')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <br>
                         <div class="row justify-content-center">
                             <div class="col-12 col-md-4">
-                                <label for="description">Descrição</label>
+                                <label for="description_proep">Descrição</label>
                             </div>
                             <div class="col-12 col-md-8">
-                                    <textarea id="description"
-                                              name="description"
-                                              rows="4"
-                                              cols="20"
-                                              class="form-control @error('description') is-invalid @enderror"></textarea>
+                                    <textarea id="description_proep" name="description_proep" rows="4" cols="20" class="form-control @error('description_proep') is-invalid @enderror" required></textarea>
                             </div>
-                            @error('description')
+                            @error('description_proep')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <br>
                         <div class="row justify-content-center">
                             <div class="col-12 col-md-4">
-                                <label for="responsible">Responsável</label>
+                                <label for="responsible_proep">Responsável</label>
                             </div>
                             <div class="col-12 col-md-8">
-                                <select name="responsible" id="responsible" class="form-control selectpicker"
+                                <select name="responsible_proep" id="responsible_proep" class="form-control selectpicker"
                                         data-live-search="true" data-size="5">
                                     <option value="0"></option>
                                     @foreach($responsibles as $responsible)
@@ -328,11 +279,10 @@
                         <br>
                         <div class="row justify-content-center">
                             <div class="col-12 col-md-4">
-                                <label for="state">Estado</label>
+                                <label for="state_proep">Estado</label>
                             </div>
                             <div class="col-12 col-md-8">
-                                <select name="state" id="state" class="form-control selectpicker"
-                                        data-live-search="true" data-size="5">
+                                <select name="state_proep" id="state_proep" class="form-control selectpicker" data-live-search="true" data-size="5">
                                     <option value="0"></option>
                                     @foreach($states as $state)
                                         <option value="{{ $state->id}}">
@@ -345,16 +295,92 @@
                         <br>
                         <div class="row justify-content-center">
                             <div class="col-12 col-md-4">
-                                <label for="observation">Observação</label>
+                                <label for="observation_proep">Observação</label>
                             </div>
                             <div class="col-12 col-md-8">
-                                    <textarea id="observation"
-                                              name="observation"
-                                              rows="4"
-                                              cols="20"
-                                              class="form-control @error('observation') is-invalid @enderror"></textarea>
+                                    <textarea id="observation_proep" name="observation_proep" rows="4" cols="20" class="form-control @error('observation_proep') is-invalid @enderror"></textarea>
                             </div>
-                            @error('observation')
+                            @error('observation_proep')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-sm-4">
+                                <input type="submit" class="btn btn-success btn-block" value="Salvar"><br>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <input class="btn btn-danger btn-block" onclick="closeFormProep()"
+                                       value="Cancelar"><br>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 form-popup" id="sem_patrimonio_pop_up"><br>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6 card">
+                <div class="card-body">
+                    <form method="POST" id="form_sem_pat" action="{{ route ('collect.store') }}"
+                          enctype="multipart/form-data">
+                        @csrf
+                        <input id="local_id_sem_pat" name="local_id_sem_pat" type="number" value="{{$local->id}}"
+                               style="display: none">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-4">
+                                <label for="description_sem_pat">Descrição</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                    <textarea id="description_sem_pat" name="description_sem_pat" rows="4" cols="20" class="form-control @error('description_sem_pat') is-invalid @enderror" required></textarea>
+                            </div>
+                            @error('description_sem_pat')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-4">
+                                <label for="responsible_sem_pat">Responsável</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <select name="responsible_sem_pat" id="responsible_sem_pat" class="form-control selectpicker"
+                                        data-live-search="true" data-size="5">
+                                    <option value="0"></option>
+                                    @foreach($responsibles as $responsible)
+                                        <option value="{{ $responsible->id}}">
+                                            {{$responsible->value}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-4">
+                                <label for="state_sem_pat">Estado</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <select name="state_sem_pat" id="state_sem_pat" class="form-control selectpicker" data-live-search="true" data-size="5">
+                                    <option value="0"></option>
+                                    @foreach($states as $state)
+                                        <option value="{{ $state->id}}">
+                                            {{$state->value}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-4">
+                                <label for="observation_sem_pat">Observação</label>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                    <textarea id="observation_sem_pat" name="observation_sem_pat" rows="4" cols="20" class="form-control @error('observation_sem_pat') is-invalid @enderror"></textarea>
+                            </div>
+                            @error('observation_sem_pat')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -413,7 +439,11 @@
                                     'processing': true,
                                     'serverSide': false,
                                     type: "GET",
-                                    data: {tombo: $("#search").val(), local_id: $("#local_id").val()},
+                                    data: {
+                                        tombo: $("#search").val(),
+                                        select: $("#select").prop('checked'),
+                                        local_id: $("#local_id").val()
+                                    },
                                     url: "/collect/ajaxDualCollect",
                                     success: function (response) {
                                         var patrimony = JSON.parse(response)[0];
@@ -441,16 +471,16 @@
                 return true;
             });
 
-            $("#collect_antigo_form").bind('submit', function (e) {
+            $("#tombo_antigo_form").bind('submit', function (e) {
                 e.preventDefault();
                 jQuery.ajax({
                     'processing': true,
                     'serverSide': false,
                     type: "GET",
                     data: {
-                        tombo: $("#search-popup").val(),
-                        select: $("#select-popup").prop('checked'),
-                        local_id: $("#local_id-popup").val()
+                        tombo: $("#tombo_antigo_search").val(),
+                        select: $("#tombo_antigo_select").prop('checked'),
+                        local_id: $("#tombo_antigo_local_id").val()
                     },
                     url: "/collect/ajax",
                     success: function (response) {
@@ -473,7 +503,11 @@
                                     'processing': true,
                                     'serverSide': false,
                                     type: "GET",
-                                    data: {tombo: $("#search").val(), local_id: $("#local_id").val()},
+                                    data: {
+                                        tombo: $("#tombo_antigo_search").val(),
+                                        select: $("#tombo_antigo_select").prop('checked'),
+                                        local_id: $("#tombo_antigo_local_id").val()
+                                    },
                                     url: "/collect/ajaxDualCollect",
                                     success: function (response) {
                                         var patrimony = JSON.parse(response)[0];
@@ -495,20 +529,19 @@
                         alert("Não foi possível encontrar o item");
                     }
                 }).always(function () {
+                    $('#tombo_antigo_search').val('');
                     closeFormAntigo();
-                    $('#search').val('');
-                    $("#select").prop('checked', false);
                 });
                 return true;
             });
         });
 
         function openFormSemPatrimonio() {
-            document.getElementById("sem_patrimonio").style.display = "block";
+            document.getElementById("sem_patrimonio_pop_up").style.display = "block";
         }
 
         function closeFormSemPatrimonio() {
-            document.getElementById("sem_patrimonio").style.display = "none";
+            document.getElementById("sem_patrimonio_pop_up").style.display = "none";
         }
 
         function openFormAntigo() {
@@ -517,6 +550,14 @@
 
         function closeFormAntigo() {
             document.getElementById("tombo_antigo_pop_up").style.display = "none";
+        }
+
+        function openFormProep() {
+            document.getElementById("proep_pop_up").style.display = "block";
+        }
+
+        function closeFormProep() {
+            document.getElementById("proep_pop_up").style.display = "none";
         }
     </script>
 @endsection

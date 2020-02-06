@@ -10,17 +10,18 @@ class Collect extends Model
 
     protected $primaryKey = 'id';
 
-    protected $attributes = [
-        'tombo' => 0,
-        'tombo_old' => 0,
-        'description' => '',
-        'observation' => ''
-    ];
+//    protected $attributes = [
+//        'tombo' => null,
+//        'tombo_old' => null,
+//        'description' => '',
+//        'observation' => ''
+//    ];
 
     protected $fillable = [
         'id',
         'tombo',
         'tombo_old',
+        'tombo_proep',
         'description',
         'observation',
         'local_id',

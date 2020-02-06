@@ -20,8 +20,9 @@ class CollectController extends Controller
      */
     public function index(Local $local)
     {
+        $inventory = $local->inventory()->first();
         $states = State::get();
-        $responsibles = Responsible::get();
+        $responsibles = $inventory->responsibles()->get();
         return view('collect.collect', ['local' => $local, 'responsibles' => $responsibles, 'states' => $states]);
     }
 
@@ -29,7 +30,7 @@ class CollectController extends Controller
     {
         $locals = $inventory->locals()->get();
         $states = State::get();
-        $responsibles = Responsible::get();
+        $responsibles = $inventory->responsibles()->get();
         return view('collect.archive', ['locals' => $locals, 'inventory' => $inventory, 'responsibles' => $responsibles, 'states' => $states]);
     }
 
@@ -58,7 +59,8 @@ class CollectController extends Controller
         $cont = 0;
         foreach ($array as $item) {
             if($item[0] != null){
-                $patrimony = Patrimony::where('tombo', '=', $item[0])->first();
+                $patrimony = $inventory->patrimonies()->where('tombo', '=', $item[0])>first();
+//                Patrimony::where('tombo', '=', $item[0])->where('inventory_id', $inventory->id)->first();
                 if($patrimony){
                     $collect = new Collect();
                     $collect->tombo = $item[0];
@@ -109,17 +111,43 @@ class CollectController extends Controller
             $collect->responsible_id = $request->input('responsible');
             $collect->state_id = $request->input('state');
         } else {
-            $collect = new Collect();
-            $local = Local::find($request->input('local_id'));
-            $collect->local_id = $local->id;
-            $collect->inventory_id = $local->inventory()->first()->id;
-            $collect->user_id = Auth::user()->id;
-            $collect->tombo_old = $request->input('tombo_old');
-            $collect->description = $request->input('description');
-            $collect->observation = $request->input('observation');
-            $collect->responsible_id = $request->input('responsible');
-            $collect->state_id = $request->input('state');
-            $collect->save();
+            if($request->input('tombo_proep')){
+                $collect = new Collect();
+                $local = Local::find($request->input('local_id_proep'));
+                $collect->local_id = $local->id;
+                $collect->inventory_id = $local->inventory()->first()->id;
+                $collect->user_id = Auth::user()->id;
+                $collect->tombo_proep = $request->input('tombo_proep');
+                $collect->description = ($request->input('description_proep')? $request->input('description_proep') : null);
+                $collect->observation = ($request->input('observation_proep')? $request->input('observation_proep') : null);
+                $collect->responsible_id = ($request->input('responsible_proep')? $request->input('responsible_proep') : null);
+                $collect->state_id = ($request->input('state_proep')? $request->input('state_proep') : null);
+                $collect->save();
+            }
+            else if($request->input('description_sem_pat')){
+                $collect = new Collect();
+                $local = Local::find($request->input('local_id_sem_pat'));
+                $collect->local_id = $local->id;
+                $collect->inventory_id = $local->inventory()->first()->id;
+                $collect->user_id = Auth::user()->id;
+                $collect->description = ($request->input('description_sem_pat')? $request->input('description_sem_pat') : null);
+                $collect->observation = ($request->input('observation_sem_pat')? $request->input('observation_sem_pat') : null);
+                $collect->responsible_id = ($request->input('responsible_sem_pat')? $request->input('responsible_sem_pat') : null);
+                $collect->state_id = ($request->input('state_sem_pat')? $request->input('state_sem_pat') : null);
+                $collect->save();
+            }else {
+                $collect = new Collect();
+                $local = Local::find($request->input('local_id'));
+                $collect->local_id = $local->id;
+                $collect->inventory_id = $local->inventory()->first()->id;
+                $collect->user_id = Auth::user()->id;
+                $collect->tombo_old = $request->input('tombo_old');
+                $collect->description = $request->input('description');
+                $collect->observation = $request->input('observation');
+                $collect->responsible_id = $request->input('responsible');
+                $collect->state_id = $request->input('state');
+                $collect->save();
+            }
         }
         $collect->save();
 
@@ -180,11 +208,15 @@ class CollectController extends Controller
 
         $antigo = $request->input('select');
 
+        $local = Local::all()->find($local_id);
+
+        $inventory = $local->inventory;
+
         if($antigo == "true"){
-            $patrimony = Patrimony::where('tombo_old', '=', $tombo)->first();
+            $patrimony = $inventory->patrimonies()->where('tombo_old', '=', $tombo)->first();
         }
         else{
-            $patrimony = Patrimony::where('tombo', '=', $tombo)->first();
+            $patrimony = $inventory->patrimonies()->where('tombo', '=', $tombo)->first();
         }
 
         $collectedhere = false;
@@ -194,9 +226,9 @@ class CollectController extends Controller
                 $collectedhere = true;
         }
 
-        $responsible = $patrimony->responsible()->first();
+        $responsible = $patrimony->responsible;
 
-        $state = $patrimony->state()->first();
+        $state = $patrimony->state;
 
         $collect = null;
         if (!$collectedhere) {
@@ -224,6 +256,7 @@ class CollectController extends Controller
             'state' => $collect->state()->first() ? json_decode(json_encode($collect->state()->first())) : json_decode(json_encode($state)),
             'collectedhere' => $collectedhere
         ]);
+//        dd($collect->responsible,$responsible,$ret);
 
         $patrimony->collected = 1;
 
@@ -238,9 +271,18 @@ class CollectController extends Controller
 
         $local_id = $request->input('local_id');
 
-        $patrimony = Patrimony::where('tombo', '=', $tombo)->first();
+        $antigo = $request->input('select');
 
-        $local = $patrimony->local()->first();
+        $local = Local::all()->find($local_id);
+
+        $inventory = $local->inventory;
+
+        if($antigo == "true"){
+            $patrimony = $inventory->patrimonies()->where('tombo_old', '=', $tombo)->first();
+        }
+        else{
+            $patrimony = $inventory->patrimonies()->where('tombo', '=', $tombo)->first();
+        }
 
         $responsible = $patrimony->responsible()->first();
 

@@ -111,19 +111,21 @@ class InventoryController extends Controller
          * 5 -> DESCRIÇÃO DO ITEM
          */
         foreach ($array as $item) {
-            if (count($item) < 6)
+            if (count($item) < 6) {
                 break;
+            }
             /**
              * Procura a referencia do responsável pelo item, caso não encontre, cria um novo
              */
 
             $responsible = null;
 
-            if (Responsible::where('value', $item[4])->count()) {
-                $responsible = Responsible::where('value', $item[4])->get();
+            if (Responsible::where('value', "'".$item[4]."'")->where('inventory_id', $inventory->id)->count()) {
+                $responsible = Responsible::where('value', $item[4])->where('inventory_id', $inventory->id)->get();
             } else {
                 $responsible = new Responsible();
                 $responsible->value = $item[4];
+                $responsible->inventory_id = $inventory->id;
                 $responsible->save();
             }
 
@@ -151,18 +153,19 @@ class InventoryController extends Controller
              */
             $state = null;
 
-            if(State::where('value','BOM')->count()){
-                $state = State::where('value','BOM')->get();
-            }else{
+            if (State::where('value', 'BOM')->count()) {
+                $state = State::where('value', 'BOM')->get();
+            } else {
                 $state = State::create([
-                        'value' => 'BOM'
-                    ]);
+                    'value' => 'BOM'
+                ]);
             }
 
         }
         foreach ($array as $item) {
-            if (count($item) < 6)
+            if (count($item) < 6) {
                 break;
+            }
 
             /**
              * Procura a referencia do estado do item, caso não encontre, cria um novo
@@ -170,7 +173,7 @@ class InventoryController extends Controller
             $patrimony = null;
             $state = State::where('value', 'BOM')->get();
             $local = Local::where('value', $item[0])->where('inventory_id', $inventory->id)->get();
-	    $responsible = Responsible::where('value', $item[4])->get();
+            $responsible = Responsible::where('value', $item[4])->get();
 
             if (Patrimony::where('tombo', $item[2])->where('inventory_id', $inventory->id)->count()) {
                 $patrimony = Patrimony::where('tombo', $item[2])->where('inventory_id', $inventory->id)->get();
@@ -251,7 +254,8 @@ class InventoryController extends Controller
         /*Collect::where('inventory_id', '=', $inventory->id)->delete();
         Patrimony::where('inventory_id', '=', $inventory->id)->delete();
         Local::where('inventory_id', '=', $inventory->id)->delete();
-        */Inventory::where('id', '=', $inventory->id)->delete();
+        */
+        Inventory::where('id', '=', $inventory->id)->delete();
 
         return redirect('home')
             ->with('success', 'Inventário removido com sucesso!');
@@ -292,7 +296,8 @@ class InventoryController extends Controller
 //            ->join('locals', 'collects.local_id', '=', 'locals.id')
             ->join('locals as local_antigo', 'patrimonies.local_id', '=', 'local_antigo.id')
             ->join('locals as local_novo', 'collects.local_id', '=', 'local_novo.id')
-            ->select('collects.observation as observation', 'local_antigo.value as local_antigo', 'local_novo.value as local_novo', 'collects.created_at as data', 'users.name as coletor')
+            ->select('collects.observation as observation', 'local_antigo.value as local_antigo',
+                'local_novo.value as local_novo', 'collects.created_at as data', 'users.name as coletor')
             ->selectRaw('if( collects.tombo != 0 , collects.tombo, patrimonies.tombo) as tombo')
             ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, patrimonies.tombo_old) as tombo_old')
             ->selectRaw('if( collects.description != \'\' , collects.description, patrimonies.description) as description')
@@ -381,7 +386,8 @@ class InventoryController extends Controller
                         $join->on('collects.user_id', '=', 'user.id');
                     })
                     ->join('locals', 'collects.local_id', '=', 'locals.id')
-                    ->select('collects.observation as observation', 'locals.value as local', 'collects.created_at as data')
+                    ->select('collects.observation as observation', 'locals.value as local',
+                        'collects.created_at as data')
                     ->selectRaw('if( collects.tombo != 0 , collects.tombo, patrimonies.tombo) as tombo')
                     ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, patrimonies.tombo_old) as tombo_old')
                     ->selectRaw('if( collects.description != \'\' , collects.description, patrimonies.description) as description')
@@ -398,17 +404,17 @@ class InventoryController extends Controller
 //                    '| Observação|' .
 //                    '| Equipe' .
 //                    '| Data';
-                foreach ($tmp as $t)
-                {
-                    $txt .= ' -> '.$t->local.
-                        ' | '.$t->equipe.
-                        ' | '.$t->data;
+                foreach ($tmp as $t) {
+                    $txt .= ' -> ' . $t->local .
+                        ' | ' . $t->equipe .
+                        ' | ' . $t->data;
                 }
 
                 $duplicity->description .= $txt;
 
-                foreach ($tmp as $t)
+                foreach ($tmp as $t) {
                     $duplicado->push($t);
+                }
                 $duplicity->duplicados = $duplicado;
                 $duplicados->push($duplicity);
             }
@@ -440,7 +446,8 @@ class InventoryController extends Controller
             ->join('locals as local', function ($join) {
                 $join->on('patrimonies.local_id', '=', 'local.id');
             })
-            ->select('local.value as local', 'patrimonies.tombo as tombo', 'patrimonies.tombo_old as tombo_old', 'patrimonies.description as description', 'responsible.value as responsible', 'state.value as estado')
+            ->select('local.value as local', 'patrimonies.tombo as tombo', 'patrimonies.tombo_old as tombo_old',
+                'patrimonies.description as description', 'responsible.value as responsible', 'state.value as estado')
             ->where('patrimonies.collected', '=', 0);
 //            ->first();
 //dd($patrimonies);
@@ -555,7 +562,7 @@ class InventoryController extends Controller
 
     public function listLocalizacao(Inventory $inventory)
     {
-        $collects = $inventory->collects->where('patrimony_id', '!=' ,null);
+        $collects = $inventory->collects->where('patrimony_id', '!=', null);
 
 //        dd($collects);
         $filtered = $collects->reject(function ($collect) {
@@ -654,7 +661,8 @@ class InventoryController extends Controller
             ->leftJoin('users', 'collects.user_id', '=', 'users.id')
             ->leftJoin('locals as local_antigo', 'patrimonies.local_id', '=', 'local_antigo.id')
             ->leftJoin('locals as local_novo', 'collects.local_id', '=', 'local_novo.id')
-            ->select('local_antigo.value as local_antigo', 'local_novo.value as local_novo','collects.observation as observation', 'collects.created_at as data', 'users.name as coletor')
+            ->select('local_antigo.value as local_antigo', 'local_novo.value as local_novo',
+                'collects.observation as observation', 'collects.created_at as data', 'users.name as coletor')
             ->selectRaw('if( collects.tombo != 0 , collects.tombo, patrimonies.tombo) as tombo')
             ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, patrimonies.tombo_old) as tombo_old')
             ->selectRaw('if( collects.description != \'\' , collects.description, patrimonies.description) as description')
@@ -751,7 +759,7 @@ class InventoryController extends Controller
             $collects->Where('collects.observation', 'like', '%' . $request->input('observation') . '%');
         }
         if ($request->input('local')) {
-            $collects->Where('collects.local_id', '=', $request->input('local') );
+            $collects->Where('collects.local_id', '=', $request->input('local'));
         }
         if ($request->input('responsible')) {
             $collects->where(function ($query) use ($request) {

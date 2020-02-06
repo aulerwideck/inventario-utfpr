@@ -20,6 +20,8 @@ class Responsible extends Model
     ];
 
     protected $hidden = [
+        'patrimony_id',
+        'inventory_id',
     ];
 
     public function patrimonies()
@@ -31,4 +33,10 @@ class Responsible extends Model
     {
         return $this->hasMany('App\Collect');
     }
+
+    public function inventory()
+    {
+        return $this->belongsTo('App\Inventory');
+    }
+
 }

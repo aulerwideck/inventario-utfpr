@@ -8,7 +8,7 @@
                     <div class="card-header">{{$local->value}}</div>
                     <div class="card-body">
                         <div class="">
-                            <h4 class="card-title">Itens</h4>
+                            <h4 class="card-title">Itens pertencentes ao local</h4>
                         </div>
                         <table id="patrimonies-local-table"
                                class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
@@ -25,7 +25,7 @@
                     </div>
                     <div class="card-body">
                         <div class="">
-                            <h4 class="card-title">Itens Coletados</h4>
+                            <h4 class="card-title">Itens coletados no local</h4>
                         </div>
                         <table id="patrimonies-local-table-collected"
                                class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"

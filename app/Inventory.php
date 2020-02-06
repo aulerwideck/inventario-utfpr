@@ -49,4 +49,9 @@ class Inventory extends Model
         return $this->hasMany('App\Collect');
     }
 
+    public function responsibles()
+    {
+        return $this->hasMany('App\Responsible');
+    }
+
 }
