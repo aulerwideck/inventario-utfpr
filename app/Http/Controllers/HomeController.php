@@ -61,6 +61,8 @@ class HomeController extends Controller
 //        $user->assignRole('reader');
 //        $user = User::find(14);
 //        $user->assignRole('reader');
+//        $user = User::find(19);
+//        $user->assignRole('reader');
 
         /**
          * Criando os permissões para inventários
@@ -87,15 +89,19 @@ class HomeController extends Controller
          * Associando as permissões para as roles
          */
         $adm = Role::find(5);
-//        $adm->givePermissionTo('create inventories');
-//        $adm->givePermissionTo('read inventories');
-//        $adm->givePermissionTo('update inventories');
-//        $adm->givePermissionTo('delete inventories');
-//        $adm->givePermissionTo('see relatories');
+        $adm->givePermissionTo('create inventories');
+        $adm->givePermissionTo('read inventories');
+        $adm->givePermissionTo('update inventories');
+        $adm->givePermissionTo('delete inventories');
+        $adm->givePermissionTo('see relatories');
         $adm->givePermissionTo('create locals');
         $adm->givePermissionTo('read locals');
         $adm->givePermissionTo('update locals');
         $adm->givePermissionTo('delete locals');
+
+        $reader = Role::find(7);
+        $reader->givePermissionTo('read inventories');
+        $reader->givePermissionTo('read locals');
 
     }
 }

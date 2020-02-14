@@ -11,7 +11,8 @@
                                 <h3 class="mb-0">Relatórios - Inventário - {{$inventory->year}}</h3>
                             </div>
                             <div class="col-5 text-right">
-                                <a href="{{ route('inventory.show', ['inventory' => $inventory]) }}"
+                                {{--                                <a href="{{ route('inventory.show', ['inventory' => $inventory]) }}"--}}
+                                <a href="{{ url('/home') }}"
                                    class="btn btn-lg btn-primary">Voltar</a>
                             </div>
                         </div>
@@ -106,13 +107,13 @@
                                                     <h5 class="card-title text-uppercase text-muted mb-0">
                                                         Observações</h5>
                                                     <span class="h2 font-weight-bold mb-0">
-                                                    {{ $inventory->collects()->where('observation', '!=', null)->count() }}
+                                                    {{ $inventory->collects()->where('observation', '!=', null)->where('collects.observation', '!=', ' - Item PROEP')->where('collects.observation', '!=', ' - Item Sem Patrimônio')->count() }}
                                                 </span>
                                                 </div>
                                             </div>
                                             <p class="mt-3 mb-0 text-muted text-sm">
                                             <span class="text-success mr-2"><i class="fa fa-percent"></i>
-                                                {{number_format (($inventory->collects()->where('observation', '!=', null)->count()/$inventory->collects()->count())*100,2)}}%
+                                                {{number_format (($inventory->collects()->where('observation', '!=', null)->where('collects.observation', '!=', ' - Item PROEP')->where('collects.observation', '!=', ' - Item Sem Patrimônio')->count()/$inventory->collects()->count())*100,2)}}%
                                             </span>
                                             </p>
                                             <div class="row">
@@ -158,16 +159,13 @@
                                                     <h5 class="card-title text-uppercase text-muted mb-0">Alteração de
                                                         local</h5>
                                                     <span class="h2 font-weight-bold mb-0">
-@php
-                                                            $count = 0;
-                                                        @endphp
-{{$count}}
+                                                        {{$inventory->collects()->join('patrimonies', function ($join) { $join->on('patrimonies.id', '=', 'collects.patrimony_id')->on('patrimonies.local_id', '!=', 'collects.local_id'); })->count()}}
 	                                            </span>
                                                 </div>
                                             </div>
                                             <p class="mt-3 mb-0 text-muted text-sm">
                                             <span class="text-success mr-2"><i class="fa fa-percent"></i>
-                                                {{number_format (($count/$inventory->collects()->count())*100,2)}}%
+                                                {{number_format (($inventory->collects()->join('patrimonies', function ($join) { $join->on('patrimonies.id', '=', 'collects.patrimony_id')->on('patrimonies.local_id', '!=', 'collects.local_id'); })->count()/$inventory->collects()->count())*100,2)}}%
                                             </span>
                                             </p>
                                             <div class="row">

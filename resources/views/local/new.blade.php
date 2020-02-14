@@ -30,11 +30,7 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <input id="inventory_id"
-                                   name="inventory_id"
-                                   type="number"
-                                   value="{{$inventory->id}}"
-                                   required>
+                            <input id="inventory_id" name="inventory_id" type="number" value="{{$inventory->id}}" style="display: none" required>
                             <div class="clearfix"></div>
                             <br/>
                             <div class="row justify-content-center">

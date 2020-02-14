@@ -25,6 +25,7 @@
                                     <thead>
                                     <th class="all">Tombo</th>
                                     <th class="none">Tombo Antigo</th>
+                                    <th class="none">Tombo PROEP</th>
                                     <th style="width:150px; max-width: 150px;" class="all">Descrição</th>
                                     <th class="none">Observação</th>
                                     <th class="none">Coletado por</th>
@@ -50,6 +51,7 @@
                     columns: [
                         {data: 'tombo', name: 'tombo'},
                         {data: 'tombo_old', name: 'tombo_old'},
+                        {data: 'tombo_proep', name: 'tombo_proep'},
                         {data: 'description', name: 'description'},
                         {data: 'observation', name: 'observation'},
                         {data: 'coletor', name: 'coletor'},

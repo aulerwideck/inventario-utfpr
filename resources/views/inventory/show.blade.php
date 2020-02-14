@@ -37,9 +37,9 @@
                                             </div>
                                         </div>
                                         <div class="progress-bar progress-bar-success" role="progressbar"
-                                             style="background-color: #5cb85c; width:{{number_format (($inventory->collects()->count()/$inventory->patrimonies()->count())*100,2)}}%">
+                                             style="background-color: #5cb85c; width:{{number_format (( $inventory->collects()->count()/$inventory->patrimonies()->count() <= 1 ? $inventory->collects()->count()/$inventory->patrimonies()->count():1)*100,2)}}%">
                                             <span
-                                                style="@if(($inventory->collects()->count()/$inventory->patrimonies()->count())*100 < 30)color:black; @else color:white; @endif">{{number_format (($inventory->collects()->count()/$inventory->patrimonies()->count())*100,2)}}%</span>
+                                                style="@if(($inventory->collects()->count()/$inventory->patrimonies()->count())*100 < 30)color:black; @else color:white; @endif">{{number_format (( $inventory->collects()->count()/$inventory->patrimonies()->count() <= 1 ?$inventory->collects()->count()/$inventory->patrimonies()->count():1)*100,2)}}%</span>
                                         </div>
                                     </div>
                                 </div>

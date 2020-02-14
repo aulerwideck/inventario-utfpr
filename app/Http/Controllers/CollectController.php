@@ -119,7 +119,7 @@ class CollectController extends Controller
                 $collect->user_id = Auth::user()->id;
                 $collect->tombo_proep = $request->input('tombo_proep');
                 $collect->description = ($request->input('description_proep')? $request->input('description_proep') : null);
-                $collect->observation = ($request->input('observation_proep')? $request->input('observation_proep') : null);
+                $collect->observation = ($request->input('observation_proep')? $request->input('observation_proep')." - Item PROEP" : " - Item PROEP");
                 $collect->responsible_id = ($request->input('responsible_proep')? $request->input('responsible_proep') : null);
                 $collect->state_id = ($request->input('state_proep')? $request->input('state_proep') : null);
                 $collect->save();
@@ -131,7 +131,7 @@ class CollectController extends Controller
                 $collect->inventory_id = $local->inventory()->first()->id;
                 $collect->user_id = Auth::user()->id;
                 $collect->description = ($request->input('description_sem_pat')? $request->input('description_sem_pat') : null);
-                $collect->observation = ($request->input('observation_sem_pat')? $request->input('observation_sem_pat') : null);
+                $collect->observation = ($request->input('observation_sem_pat')? $request->input('observation_sem_pat')." - Item Sem Patrimônio" : " - Item Sem Patrimônio");
                 $collect->responsible_id = ($request->input('responsible_sem_pat')? $request->input('responsible_sem_pat') : null);
                 $collect->state_id = ($request->input('state_sem_pat')? $request->input('state_sem_pat') : null);
                 $collect->save();

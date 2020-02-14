@@ -16,7 +16,7 @@
                                 </button>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3">
-                                <button class="btn btn-secondary btn-block" onclick="openFormProep()">Item PROEP
+                                <button class="btn btn-secondary btn-block" onclick="openFormProep()">Tombo PROEP
                                 </button>
                             </div>
                             <div class="col-12 col-sm-6 col-md-3">
@@ -259,23 +259,23 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <br>
-                        <div class="row justify-content-center">
-                            <div class="col-12 col-md-4">
-                                <label for="responsible_proep">Responsável</label>
-                            </div>
-                            <div class="col-12 col-md-8">
-                                <select name="responsible_proep" id="responsible_proep" class="form-control selectpicker"
-                                        data-live-search="true" data-size="5">
-                                    <option value="0"></option>
-                                    @foreach($responsibles as $responsible)
-                                        <option value="{{ $responsible->id}}">
-                                            {{$responsible->value}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+{{--                        <br>--}}
+{{--                        <div class="row justify-content-center">--}}
+{{--                            <div class="col-12 col-md-4">--}}
+{{--                                <label for="responsible_proep">Responsável</label>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-12 col-md-8">--}}
+{{--                                <select name="responsible_proep" id="responsible_proep" class="form-control selectpicker"--}}
+{{--                                        data-live-search="true" data-size="5">--}}
+{{--                                    <option value="0"></option>--}}
+{{--                                    @foreach($responsibles as $responsible)--}}
+{{--                                        <option value="{{ $responsible->id}}">--}}
+{{--                                            {{$responsible->value}}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <br>
                         <div class="row justify-content-center">
                             <div class="col-12 col-md-4">
@@ -339,23 +339,23 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <br>
-                        <div class="row justify-content-center">
-                            <div class="col-12 col-md-4">
-                                <label for="responsible_sem_pat">Responsável</label>
-                            </div>
-                            <div class="col-12 col-md-8">
-                                <select name="responsible_sem_pat" id="responsible_sem_pat" class="form-control selectpicker"
-                                        data-live-search="true" data-size="5">
-                                    <option value="0"></option>
-                                    @foreach($responsibles as $responsible)
-                                        <option value="{{ $responsible->id}}">
-                                            {{$responsible->value}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+{{--                        <br>--}}
+{{--                        <div class="row justify-content-center">--}}
+{{--                            <div class="col-12 col-md-4">--}}
+{{--                                <label for="responsible_sem_pat">Responsável</label>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-12 col-md-8">--}}
+{{--                                <select name="responsible_sem_pat" id="responsible_sem_pat" class="form-control selectpicker"--}}
+{{--                                        data-live-search="true" data-size="5">--}}
+{{--                                    <option value="0"></option>--}}
+{{--                                    @foreach($responsibles as $responsible)--}}
+{{--                                        <option value="{{ $responsible->id}}">--}}
+{{--                                            {{$responsible->value}}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <br>
                         <div class="row justify-content-center">
                             <div class="col-12 col-md-4">

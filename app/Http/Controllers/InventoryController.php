@@ -120,7 +120,7 @@ class InventoryController extends Controller
 
             $responsible = null;
 
-            if (Responsible::where('value', "'".$item[4]."'")->where('inventory_id', $inventory->id)->count()) {
+            if (Responsible::where('value', "'" . $item[4] . "'")->where('inventory_id', $inventory->id)->count()) {
                 $responsible = Responsible::where('value', $item[4])->where('inventory_id', $inventory->id)->get();
             } else {
                 $responsible = new Responsible();
@@ -294,15 +294,19 @@ class InventoryController extends Controller
             })
             ->leftJoin('users', 'collects.user_id', '=', 'users.id')
 //            ->join('locals', 'collects.local_id', '=', 'locals.id')
-            ->join('locals as local_antigo', 'patrimonies.local_id', '=', 'local_antigo.id')
+            ->leftjoin('locals as local_antigo', 'patrimonies.local_id', '=', 'local_antigo.id')
             ->join('locals as local_novo', 'collects.local_id', '=', 'local_novo.id')
-            ->select('collects.observation as observation', 'local_antigo.value as local_antigo',
-                'local_novo.value as local_novo', 'collects.created_at as data', 'users.name as coletor')
-            ->selectRaw('if( collects.tombo != 0 , collects.tombo, patrimonies.tombo) as tombo')
-            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, patrimonies.tombo_old) as tombo_old')
-            ->selectRaw('if( collects.description != \'\' , collects.description, patrimonies.description) as description')
-            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, responsible_patrimonies.value) as responsible')
-            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, state_patrimonies.value) as estado')
+            ->selectRaw('if(collects.observation != \'\', collects.observation, if(collects.observation is not null, collects.observation, \'\')) as observation,
+                if(local_antigo.value, local_antigo.value, \'\') as local_antigo,
+                local_novo.value as local_novo,
+                collects.created_at as data,
+                users.name as coletor')
+            ->selectRaw('if( collects.tombo != 0 , collects.tombo, if( collects.tombo is not null , collects.tombo, patrimonies.tombo)) as tombo')
+            ->selectRaw('if( collects.tombo_proep != 0 , collects.tombo_proep, if( collects.tombo_proep is not null , collects.tombo_proep, \'\')) as tombo_proep')
+            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, if( collects.tombo_old is not null , collects.tombo_old, patrimonies.tombo_old)) as tombo_old')
+            ->selectRaw('if( collects.description != \'\' , collects.description, if( collects.description is not null, collects.description, patrimonies.description)) as description')
+            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, if( responsible_collects.value is not null , responsible_collects.value, responsible_patrimonies.value)) as responsible')
+            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, if( state_collects.value is not null , state_collects.value, state_patrimonies.value)) as estado')
             ->where('collects.inventory_id', '=', $inventory->id);
 
         return Datatables::of($collects)
@@ -317,6 +321,9 @@ class InventoryController extends Controller
             ->filterColumn('tombo_old', function ($query, $keyword) {
                 $query->whereRaw("collects.tombo_old like ?", ["%$keyword%"])
                     ->orWhereRaw("patrimonies.tombo_old like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('tombo_proep', function ($query, $keyword) {
+                $query->whereRaw("collects.tombo_proep like ?", ["%$keyword%"]);
             })
             ->filterColumn('description', function ($query, $keyword) {
                 $query->whereRaw("collects.description like ?", ["%$keyword%"])
@@ -358,6 +365,7 @@ class InventoryController extends Controller
             ->selectRaw('count(*) as count')
             ->selectRaw('\'\' as tombo')
             ->where('patrimony_id', '!=', null)
+            ->where('inventory_id', '=', $inventory->id)
             ->get();
 
         $duplicados = \collect();
@@ -448,7 +456,8 @@ class InventoryController extends Controller
             })
             ->select('local.value as local', 'patrimonies.tombo as tombo', 'patrimonies.tombo_old as tombo_old',
                 'patrimonies.description as description', 'responsible.value as responsible', 'state.value as estado')
-            ->where('patrimonies.collected', '=', 0);
+            ->where('patrimonies.collected', '=', 0)
+            ->where('patrimonies.inventory_id', '=', $inventory->id);
 //            ->first();
 //dd($patrimonies);
         return Datatables::of($patrimonies)
@@ -499,12 +508,15 @@ class InventoryController extends Controller
                 $join->on('patrimonies.state_id', '=', 'state_patrimonies.id');
             })
             ->join('locals', 'collects.local_id', '=', 'locals.id')
-            ->select('collects.observation as observation', 'locals.value as local', 'collects.created_at as data')
-            ->selectRaw('if( collects.tombo != 0 , collects.tombo, patrimonies.tombo) as tombo')
-            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, patrimonies.tombo_old) as tombo_old')
-            ->selectRaw('if( collects.description != \'\' , collects.description, patrimonies.description) as description')
-            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, responsible_patrimonies.value) as responsible')
-            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, state_patrimonies.value) as estado')
+            ->selectRaw('if(collects.observation != \'\', collects.observation, if(collects.observation is not null, collects.observation, \'\')) as observation,
+                locals.value as local_novo,
+                collects.created_at as data')
+            ->selectRaw('if( collects.tombo != 0 , collects.tombo, if( collects.tombo is not null , collects.tombo, patrimonies.tombo)) as tombo')
+            ->selectRaw('if( collects.tombo_proep != 0 , collects.tombo_proep, if( collects.tombo_proep is not null , collects.tombo_proep, \'\')) as tombo_proep')
+            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, if( collects.tombo_old is not null , collects.tombo_old, patrimonies.tombo_old)) as tombo_old')
+            ->selectRaw('if( collects.description != \'\' , collects.description, if( collects.description is not null, collects.description, patrimonies.description)) as description')
+            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, if( responsible_collects.value is not null , responsible_collects.value, responsible_patrimonies.value)) as responsible')
+            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, if( state_collects.value is not null , state_collects.value, state_patrimonies.value)) as estado')
             ->where('collects.inventory_id', '=', $inventory->id)
             ->where('collects.patrimony_id', '!=', null)
             ->where('collects.state_id', '!=', 1);
@@ -522,6 +534,9 @@ class InventoryController extends Controller
             ->filterColumn('tombo_old', function ($query, $keyword) {
                 $query->whereRaw("collects.tombo_old like ?", ["%$keyword%"])
                     ->orWhereRaw("patrimonies.tombo_old like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('tombo_proep', function ($query, $keyword) {
+                $query->whereRaw("collects.tombo_proep like ?", ["%$keyword%"]);
             })
             ->filterColumn('description', function ($query, $keyword) {
                 $query->whereRaw("collects.description like ?", ["%$keyword%"])
@@ -641,7 +656,6 @@ class InventoryController extends Controller
             ->with('inventory', $inventory);
     }
 
-
     public function listObservacao(Inventory $inventory)
     {
         $collects = Collect::query()
@@ -661,15 +675,21 @@ class InventoryController extends Controller
             ->leftJoin('users', 'collects.user_id', '=', 'users.id')
             ->leftJoin('locals as local_antigo', 'patrimonies.local_id', '=', 'local_antigo.id')
             ->leftJoin('locals as local_novo', 'collects.local_id', '=', 'local_novo.id')
-            ->select('local_antigo.value as local_antigo', 'local_novo.value as local_novo',
-                'collects.observation as observation', 'collects.created_at as data', 'users.name as coletor')
-            ->selectRaw('if( collects.tombo != 0 , collects.tombo, patrimonies.tombo) as tombo')
-            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, patrimonies.tombo_old) as tombo_old')
-            ->selectRaw('if( collects.description != \'\' , collects.description, patrimonies.description) as description')
-            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, responsible_patrimonies.value) as responsible')
-            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, state_patrimonies.value) as estado')
+            ->selectRaw('if(collects.observation != \'\', collects.observation, if(collects.observation is not null, collects.observation, \'\')) as observation,
+                if(local_antigo.value, local_antigo.value, \'\') as local_antigo,
+                local_novo.value as local_novo,
+                collects.created_at as data,
+                users.name as coletor')
+            ->selectRaw('if( collects.tombo != 0 , collects.tombo, if( collects.tombo is not null , collects.tombo, patrimonies.tombo)) as tombo')
+            ->selectRaw('if( collects.tombo_proep != 0 , collects.tombo_proep, if( collects.tombo_proep is not null , collects.tombo_proep, \'\')) as tombo_proep')
+            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, if( collects.tombo_old is not null , collects.tombo_old, patrimonies.tombo_old)) as tombo_old')
+            ->selectRaw('if( collects.description != \'\' , collects.description, if( collects.description is not null, collects.description, patrimonies.description)) as description')
+            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, if( responsible_collects.value is not null , responsible_collects.value, responsible_patrimonies.value)) as responsible')
+            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, if( state_collects.value is not null , state_collects.value, state_patrimonies.value)) as estado')
             ->where('collects.inventory_id', '=', $inventory->id)
-            ->where('collects.observation', '!=', null);
+            ->where('collects.observation', '!=', null)
+            ->where('collects.observation', '!=', ' - Item PROEP')
+            ->where('collects.observation', '!=', ' - Item Sem Patrimônio');
 //        dd($collects);
 
         return Datatables::of($collects)
