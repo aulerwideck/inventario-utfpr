@@ -177,6 +177,56 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="card card-stats mb-4 shadow">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5 class="card-title text-uppercase text-muted mb-0">Itens PROEP</h5>
+                                                    <span class="h2 font-weight-bold mb-0">
+                                                        {{$inventory->collects()->whereNotNull ('tombo_proep')->count()}}
+	                                            </span>
+                                                </div>
+                                            </div>
+                                            <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-success mr-2"><i class="fa fa-percent"></i>
+                                                {{number_format (($inventory->collects()->whereNotNull ('tombo_proep')->count()/$inventory->collects()->count())*100,2)}}%
+                                            </span>
+                                            </p>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a href="{{ route('inventory.relatory.proep', ['inventory' => $inventory]) }}"
+                                                       class="btn btn-lg btn-primary">Exibir</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="card card-stats mb-4 shadow">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5 class="card-title text-uppercase text-muted mb-0">Itens Sem Patrimônio</h5>
+                                                    <span class="h2 font-weight-bold mb-0">
+                                                        {{$inventory->collects()->whereNull ('collects.patrimony_id')->whereNull ('collects.tombo_proep')->whereNull ('collects.tombo_old')->whereNull ('collects.tombo')->count()}}
+	                                            </span>
+                                                </div>
+                                            </div>
+                                            <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-success mr-2"><i class="fa fa-percent"></i>
+                                                {{number_format (($inventory->collects()->whereNull ('collects.patrimony_id')->whereNull ('collects.tombo_proep')->whereNull ('collects.tombo_old')->whereNull ('collects.tombo')->count()/$inventory->collects()->count())*100,2)}}%
+                                            </span>
+                                            </p>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a href="{{ route('inventory.relatory.semPatrimonio', ['inventory' => $inventory]) }}"
+                                                       class="btn btn-lg btn-primary">Exibir</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col">

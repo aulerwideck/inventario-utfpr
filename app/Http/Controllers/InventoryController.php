@@ -586,64 +586,6 @@ class InventoryController extends Controller
 
         return Datatables::of($filtered)
             ->make(true);
-//            ->filterColumn('responsible', function ($query, $keyword) {
-//                $query->whereRaw("responsible_collects.value like ?", ["%$keyword%"])
-//                    ->orWhereRaw("responsible_patrimonies.value like ?", ["%$keyword%"]);
-//            })
-//            ->filterColumn('tombo', function ($query, $keyword) {
-//                $query->whereRaw("collects.tombo like ?", ["%$keyword%"])
-//                    ->orWhereRaw("patrimonies.tombo like ?", ["%$keyword%"]);
-//            })
-//            ->filterColumn('tombo_old', function ($query, $keyword) {
-//                $query->whereRaw("collects.tombo_old like ?", ["%$keyword%"])
-//                    ->orWhereRaw("patrimonies.tombo_old like ?", ["%$keyword%"]);
-//            })
-//            ->filterColumn('description', function ($query, $keyword) {
-//                $query->whereRaw("collects.description like ?", ["%$keyword%"])
-//                    ->orWhereRaw("patrimonies.description like ?", ["%$keyword%"]);
-//            })
-//            ->filterColumn('estado', function ($query, $keyword) {
-//                $query->whereRaw("state_collects.value like ?", ["%$keyword%"])
-//                    ->orWhereRaw("state_patrimonies.value like ?", ["%$keyword%"]);
-//            })
-//            ->filterColumn('observation', function ($query, $keyword) {
-//                $query->whereRaw("collects.observation like ?", ["%$keyword%"]);
-//            })
-//            ->filterColumn('local_antigo', function ($query, $keyword) {
-//                $query->whereRaw("local_antigo.value like ?", ["%$keyword%"]);
-//            })
-//            ->filterColumn('local_novo', function ($query, $keyword) {
-//                $query->whereRaw("local_novo.value like ?", ["%$keyword%"]);
-//            })
-//
-//        $collects = Collect::query()
-//            ->join('patrimonies', 'collects.patrimony_id', '=', 'patrimonies.id')
-//            ->join('responsibles as responsible_collects', function ($join) {
-//                $join->on('collects.responsible_id', '=', 'responsible_collects.id');
-//            })
-//            ->join('responsibles as responsible_patrimonies', function ($join) {
-//                $join->on('patrimonies.responsible_id', '=', 'responsible_patrimonies.id');
-//            })
-//            ->join('states as state_collects', function ($join) {
-//                $join->on('collects.state_id', '=', 'state_collects.id');
-//            })
-//            ->join('states as state_patrimonies', function ($join) {
-//                $join->on('patrimonies.state_id', '=', 'state_patrimonies.id');
-//            })
-//            ->join('locals as local_antigo', 'patrimonies.local_id', '=', 'local_antigo.id')
-//            ->join('locals as local_novo', 'collects.local_id', '=', 'local_novo.id')
-//            ->select('collects.observation as observation', 'local_antigo.value as local_antigo', 'local_novo.value as local_novo', 'collects.created_at as data')
-//            ->selectRaw('if( collects.tombo != 0 , collects.tombo, patrimonies.tombo) as tombo')
-//            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, patrimonies.tombo_old) as tombo_old')
-//            ->selectRaw('if( collects.description != \'\' , collects.description, patrimonies.description) as description')
-//            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, responsible_patrimonies.value) as responsible')
-//            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, state_patrimonies.value) as estado')
-//            ->where([
-//                ['local_novo.id', '!=', ''],
-//                ['collects.local_id', '!=', 'patrimonies.local_id'],
-//                ['patrimonies.id', '!=', null],
-//                ['collects.inventory_id', '=', $inventory->id]
-//                ]);
 
     }
 
@@ -823,5 +765,158 @@ class InventoryController extends Controller
             })
             ->make(true);
 
+    }
+
+    public function relatoryProep(Inventory $inventory)
+    {
+        return view('inventory.relatory.proep')
+            ->with('route', 'inventory.relatory.listProep')
+            ->with('title', 'Relatório de itens PROEP')
+            ->with('inventory', $inventory);
+    }
+
+    public function listProep(Inventory $inventory)
+    {
+        $collects = Collect::query()
+            ->leftJoin('patrimonies', 'collects.patrimony_id', '=', 'patrimonies.id')
+            ->leftJoin('responsibles as responsible_collects', function ($join) {
+                $join->on('collects.responsible_id', '=', 'responsible_collects.id');
+            })
+            ->leftJoin('responsibles as responsible_patrimonies', function ($join) {
+                $join->on('patrimonies.responsible_id', '=', 'responsible_patrimonies.id');
+            })
+            ->leftJoin('states as state_collects', function ($join) {
+                $join->on('collects.state_id', '=', 'state_collects.id');
+            })
+            ->leftJoin('states as state_patrimonies', function ($join) {
+                $join->on('patrimonies.state_id', '=', 'state_patrimonies.id');
+            })
+            ->leftJoin('users', 'collects.user_id', '=', 'users.id')
+            ->leftjoin('locals as local_antigo', 'patrimonies.local_id', '=', 'local_antigo.id')
+            ->join('locals', 'collects.local_id', '=', 'locals.id')
+            ->selectRaw('if(collects.observation != \'\', collects.observation, if(collects.observation is not null, collects.observation, \'\')) as observation,
+                if(local_antigo.value, local_antigo.value, \'\') as local_antigo,
+                locals.value as local_novo,
+                collects.created_at as data,
+                users.name as coletor')
+            ->selectRaw('if( collects.tombo != 0 , collects.tombo, if( collects.tombo is not null , collects.tombo, patrimonies.tombo)) as tombo')
+            ->selectRaw('if( collects.tombo_proep != 0 , collects.tombo_proep, if( collects.tombo_proep is not null , collects.tombo_proep, \'\')) as tombo_proep')
+            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, if( collects.tombo_old is not null , collects.tombo_old, patrimonies.tombo_old)) as tombo_old')
+            ->selectRaw('if( collects.description != \'\' , collects.description, if( collects.description is not null, collects.description, patrimonies.description)) as description')
+            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, if( responsible_collects.value is not null , responsible_collects.value, responsible_patrimonies.value)) as responsible')
+            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, if( state_collects.value is not null , state_collects.value, state_patrimonies.value)) as estado')
+            ->where('collects.inventory_id', '=', $inventory->id)
+            ->whereNotNull ('collects.tombo_proep');
+//        dd($collects);
+
+        return Datatables::of($collects)
+            ->filterColumn('responsible', function ($query, $keyword) {
+                $query->whereRaw("responsible_collects.value like ?", ["%$keyword%"])
+                    ->orWhereRaw("responsible_patrimonies.value like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('tombo', function ($query, $keyword) {
+                $query->whereRaw("collects.tombo like ?", ["%$keyword%"])
+                    ->orWhereRaw("patrimonies.tombo like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('tombo_old', function ($query, $keyword) {
+                $query->whereRaw("collects.tombo_old like ?", ["%$keyword%"])
+                    ->orWhereRaw("patrimonies.tombo_old like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('tombo_proep', function ($query, $keyword) {
+                $query->whereRaw("collects.tombo_proep like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('description', function ($query, $keyword) {
+                $query->whereRaw("collects.description like ?", ["%$keyword%"])
+                    ->orWhereRaw("patrimonies.description like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('estado', function ($query, $keyword) {
+                $query->whereRaw("state_collects.value like ?", ["%$keyword%"])
+                    ->orWhereRaw("state_patrimonies.value like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('observation', function ($query, $keyword) {
+                $query->whereRaw("collects.observation like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('local', function ($query, $keyword) {
+                $query->whereRaw("locals.value like ?", ["%$keyword%"]);
+            })
+            ->make(true);
+    }
+
+    public function relatorySemPatrimonio(Inventory $inventory)
+    {
+        return view('inventory.relatory.proep')
+            ->with('route', 'inventory.relatory.listSemPatrimonio')
+            ->with('title', 'Relatório de itens Sem Patrimônio')
+            ->with('inventory', $inventory);
+    }
+
+    public function listSemPatrimonio(Inventory $inventory)
+    {
+        $collects = Collect::query()
+            ->leftJoin('patrimonies', 'collects.patrimony_id', '=', 'patrimonies.id')
+            ->leftJoin('responsibles as responsible_collects', function ($join) {
+                $join->on('collects.responsible_id', '=', 'responsible_collects.id');
+            })
+            ->leftJoin('responsibles as responsible_patrimonies', function ($join) {
+                $join->on('patrimonies.responsible_id', '=', 'responsible_patrimonies.id');
+            })
+            ->leftJoin('states as state_collects', function ($join) {
+                $join->on('collects.state_id', '=', 'state_collects.id');
+            })
+            ->leftJoin('states as state_patrimonies', function ($join) {
+                $join->on('patrimonies.state_id', '=', 'state_patrimonies.id');
+            })
+            ->leftJoin('users', 'collects.user_id', '=', 'users.id')
+            ->leftjoin('locals as local_antigo', 'patrimonies.local_id', '=', 'local_antigo.id')
+            ->join('locals', 'collects.local_id', '=', 'locals.id')
+            ->selectRaw('if(collects.observation != \'\', collects.observation, if(collects.observation is not null, collects.observation, \'\')) as observation,
+                if(local_antigo.value, local_antigo.value, \'\') as local_antigo,
+                locals.value as local_novo,
+                collects.created_at as data,
+                users.name as coletor')
+            ->selectRaw('if( collects.tombo != 0 , collects.tombo, if( collects.tombo is not null , collects.tombo, patrimonies.tombo)) as tombo')
+            ->selectRaw('if( collects.tombo_proep != 0 , collects.tombo_proep, if( collects.tombo_proep is not null , collects.tombo_proep, \'\')) as tombo_proep')
+            ->selectRaw('if( collects.tombo_old != 0 , collects.tombo_old, if( collects.tombo_old is not null , collects.tombo_old, patrimonies.tombo_old)) as tombo_old')
+            ->selectRaw('if( collects.description != \'\' , collects.description, if( collects.description is not null, collects.description, patrimonies.description)) as description')
+            ->selectRaw('if( responsible_collects.value != \'\' , responsible_collects.value, if( responsible_collects.value is not null , responsible_collects.value, responsible_patrimonies.value)) as responsible')
+            ->selectRaw('if( state_collects.value != \'\' , state_collects.value, if( state_collects.value is not null , state_collects.value, state_patrimonies.value)) as estado')
+            ->where('collects.inventory_id', '=', $inventory->id)
+            ->whereNull ('collects.patrimony_id')
+            ->whereNull ('collects.tombo_proep')
+            ->whereNull ('collects.tombo_old')
+            ->whereNull ('collects.tombo');
+//        dd($collects);
+
+        return Datatables::of($collects)
+            ->filterColumn('responsible', function ($query, $keyword) {
+                $query->whereRaw("responsible_collects.value like ?", ["%$keyword%"])
+                    ->orWhereRaw("responsible_patrimonies.value like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('tombo', function ($query, $keyword) {
+                $query->whereRaw("collects.tombo like ?", ["%$keyword%"])
+                    ->orWhereRaw("patrimonies.tombo like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('tombo_old', function ($query, $keyword) {
+                $query->whereRaw("collects.tombo_old like ?", ["%$keyword%"])
+                    ->orWhereRaw("patrimonies.tombo_old like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('tombo_proep', function ($query, $keyword) {
+                $query->whereRaw("collects.tombo_proep like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('description', function ($query, $keyword) {
+                $query->whereRaw("collects.description like ?", ["%$keyword%"])
+                    ->orWhereRaw("patrimonies.description like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('estado', function ($query, $keyword) {
+                $query->whereRaw("state_collects.value like ?", ["%$keyword%"])
+                    ->orWhereRaw("state_patrimonies.value like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('observation', function ($query, $keyword) {
+                $query->whereRaw("collects.observation like ?", ["%$keyword%"]);
+            })
+            ->filterColumn('local', function ($query, $keyword) {
+                $query->whereRaw("locals.value like ?", ["%$keyword%"]);
+            })
+            ->make(true);
     }
 }

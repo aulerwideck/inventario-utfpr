@@ -34,12 +34,16 @@ Route::group(['prefix' => 'inventory'], function(){
         Route::get('/avariado', 'InventoryController@relatoryAvariado')->name('inventory.relatory.avariado');
         Route::get('/localizacao', 'InventoryController@relatoryLocalizacao')->name('inventory.relatory.localizacao');
         Route::get('/observacao', 'InventoryController@relatoryObservacao')->name('inventory.relatory.observacao');
+        Route::get('/proep', 'InventoryController@relatoryProep')->name('inventory.relatory.proep');
+        Route::get('/semPatrimonio', 'InventoryController@relatorySemPatrimonio')->name('inventory.relatory.semPatrimonio');
         Route::get('/listFinal', 'InventoryController@listFinal')->name('inventory.relatory.listFinal');
         Route::get('/listDuplicado', 'InventoryController@listDuplicado')->name('inventory.relatory.listDuplicado');
         Route::get('/listPerdido', 'InventoryController@listPerdido')->name('inventory.relatory.listPerdido');
         Route::get('/listAvariado', 'InventoryController@listAvariado')->name('inventory.relatory.listAvariado');
         Route::get('/listLocalizacao', 'InventoryController@listLocalizacao')->name('inventory.relatory.listLocalizacao');
         Route::get('/listObservacao', 'InventoryController@listObservacao')->name('inventory.relatory.listObservacao');
+        Route::get('/listProep', 'InventoryController@listProep')->name('inventory.relatory.listProep');
+        Route::get('/listSemPatrimonio', 'InventoryController@listSemPatrimonio')->name('inventory.relatory.listSemPatrimonio');
 
         Route::get('/search', 'InventoryController@search')->name('inventory.relatory.search');
     });
