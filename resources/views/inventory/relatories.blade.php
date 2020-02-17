@@ -55,13 +55,13 @@
                                                     <h5 class="card-title text-uppercase text-muted mb-0">
                                                         Duplicados</h5>
                                                     <span class="h2 font-weight-bold mb-0">
-                                                    {{$inventory->collects()->groupBy('patrimony_id')->selectRaw('count(*) as count')->get()->where('count','>',1)->count()}}
+                                                    {{$inventory->collects()->groupBy('patrimony_id')->selectRaw('count(*) as count, patrimony_id')->get()->where('count','>',1)->where('patrimony_id', '!=', null)->count()}}
                                                 </span>
                                                 </div>
                                             </div>
                                             <p class="mt-3 mb-0 text-muted text-sm">
                                             <span class="text-success mr-2"><i class="fa fa-percent"></i>
-                                                {{ $inventory->collects()->count() > 0 ?number_format (($inventory->collects()->groupBy('patrimony_id')->selectRaw('count(*) as count')->get()->where('count','>',1)->count()/$inventory->collects()->groupBy('patrimony_id')->selectRaw('count(*) as count')->get()->where('count','>',0)->count())*100,2):"0.00"}}%
+                                                {{ $inventory->collects()->count() > 0 ?number_format (($inventory->collects()->groupBy('patrimony_id')->selectRaw('count(*) as count, patrimony_id')->get()->where('count','>',1)->where('patrimony_id', '!=', null)->count()/$inventory->patrimonies()->count())*100,2):"0.00"}}%
                                             </span>
                                             </p>
                                             <div class="row">

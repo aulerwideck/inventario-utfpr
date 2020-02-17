@@ -266,7 +266,7 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <select name="state_proep" id="state_proep" class="form-control selectpicker" data-live-search="true" data-size="5" required>
-                                    <option>Selecione</option>
+                                    <option value="" >Selecione</option>
                                     @foreach($states as $state)
                                         <option value="{{ $state->id}}">
                                             {{$state->value}}
@@ -329,7 +329,7 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <select name="state_sem_pat" id="state_sem_pat" class="form-control selectpicker" data-live-search="true" data-size="5" required>
-                                    <option>Selecione</option>
+                                    <option value="" >Selecione</option>
                                     @foreach($states as $state)
                                         <option value="{{ $state->id}}">
                                             {{$state->value}}

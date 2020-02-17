@@ -16,7 +16,6 @@
                         </div>
                     </div>
 
-
                     <div class="card-body">
                         <div class="card">
                             <div class="card-body">
@@ -24,14 +23,20 @@
                                        class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
                                        width="100%">
                                     <thead>
-                                    <th class="all">Tombo</th>
-                                    <th class="all">Tombo Antigo</th>
-                                    <th style="width:150px; max-width: 150px;" class="all">Descrição</th>
+                                    @foreach($tabela as $item)
+                                        {{--                                        {{var_dump($item['class'])}}--}}
+                                        <th class="{{ $item['class'] }}">{{ $item['name'] }}</th>
+                                    @endforeach
+                                    {{--                                    <th class="all">Tombo</th>--}}
+                                    {{--                                    <th class="none">Tombo Antigo</th>--}}
+                                    {{--                                    <th class="none">Tombo PROEP</th>--}}
+                                    {{--                                    <th style="width:150px; max-width: 150px;" class="all">Descrição</th>--}}
                                     {{--                                    <th class="none">Observação</th>--}}
-                                    <th class="all">Estado</th>
-                                    <th class="all">Local Antigo</th>
-                                    <th class="all">Local Novo</th>
-                                    <th class="all">Responsável</th>
+                                    {{--                                    <th class="none">Coletado por</th>--}}
+                                    {{--                                    <th class="all">Estado</th>--}}
+                                    {{--                                    <th class="all">Local Antigo</th>--}}
+                                    {{--                                    <th class="all">Local Encontrado</th>--}}
+                                    {{--                                    <th class="all">Responsável</th>--}}
                                     {{--                                    <th class="none">Data</th>--}}
                                     </thead>
                                 </table>
@@ -45,25 +50,9 @@
             $(document).ready(function () {
                 $('#relatory-table').DataTable({
                     processing: true,
-                    serverSide: true,
+                    serverSide: false,
                     ajax: '{!! route( $route, ['inventory' => $inventory]) !!}',
-                    columns: [
-                        // {data: 'tombo', name: 'tombo'},
-                        // {data: 'tombo_old', name: 'tombo_old'},
-                        // {data: 'description', name: 'description'},
-                        // {data: 'estado', name: 'estado'},
-                        // {data: 'local_antigo', name: 'local_antigo'},
-                        // {data: 'local_novo', name: 'local_novo'},
-                        // {data: 'responsible', name: 'responsible'},,
-                        {data: 'patrimony.tombo', name: 'patrimony.tombo'},
-                        {data: 'patrimony.tombo_old', name: 'patrimony.tombo_old'},
-                        {data: 'description', name: 'description'},
-                        {data: 'state_id', name: 'state_id'},
-                        {data: 'local_id', name: 'local_id'},
-                        {data: 'patrimony.local_id', name: 'patrimony.local_id'},
-                        // {data: 'local.value', name: 'local.value'},
-                        {data: 'user_id', name: 'user_id'},
-                    ],
+                    columns: {!! json_encode($data) !!},
                     "language": {
                         "sEmptyTable": "Nenhum registro encontrado",
                         "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
