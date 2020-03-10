@@ -76,3 +76,13 @@ Route::group(['prefix' => 'local'], function(){
     Route::post('/', 'LocalController@store')->name('local.store');
     Route::post('/{local}', 'LocalController@update')->name('local.update');
 });
+
+Route::middleware(['auth', 'verified'])->group( function () {
+    Route::get('user/search','UserController@search');
+    Route::resource('user', 'UserController');
+
+    Route::put('role/{role}/connect', ['as' => 'role.connect', 'uses' => 'RoleController@connect']);
+    Route::resource('role', 'RoleController');
+
+    Route::resource('permission', 'PermissionController');
+});

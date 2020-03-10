@@ -117,7 +117,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\inventario-utfpr\resources\views" />
+      <recent name="C:\xampp\htdocs\inventario-utfpr\app\Http" />
+      <recent name="C:\xampp\htdocs\inventario-utfpr\resources\views\users" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -140,7 +147,12 @@
       <workItem from="1581080898908" duration="7234000" />
       <workItem from="1581546910184" duration="27000" />
       <workItem from="1581679975955" duration="4904000" />
-      <workItem from="1581937551527" duration="10176000" />
+      <workItem from="1581937551527" duration="11417000" />
+      <workItem from="1581962387636" duration="3000" />
+      <workItem from="1582024201312" duration="2033000" />
+      <workItem from="1583514861492" duration="2263000" />
+      <workItem from="1583773121816" duration="21000" />
+      <workItem from="1583838489755" duration="1727000" />
     </task>
     <servers />
   </component>
@@ -148,17 +160,27 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2383" y="432" key="FileChooserDialogImpl" timestamp="1581546934194">
-      <screen x="1920" y="312" width="1366" height="728" />
+    <state x="421" y="168" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1583514872546">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="421" y="168" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728/1366.-181.2560.1040@0.0.1366.728" timestamp="1583514872546" />
+    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1582036328642">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.728/1366.-181.2560.1040@0.0.1366.728" timestamp="1582036328642" />
     <state x="2383" y="432" key="FileChooserDialogImpl/1920.312.1366.728/0.0.1920.1040@1920.312.1366.728" timestamp="1581546934194" />
+    <state x="492" y="282" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583515577147">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="492" y="282" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728/1366.-181.2560.1040@0.0.1366.728" timestamp="1583515577147" />
     <state x="2302" y="150" key="run.anything.popup" timestamp="1581017074853">
       <screen x="1366" y="-181" width="2560" height="1040" />
     </state>
     <state x="2302" y="150" key="run.anything.popup/0.0.1366.728/1366.-181.2560.1040@1366.-181.2560.1040" timestamp="1581017074853" />
-    <state x="2302" y="-8" width="672" height="676" key="search.everywhere.popup" timestamp="1581680718374">
-      <screen x="1366" y="-181" width="2560" height="1040" />
+    <state x="499" y="121" width="672" height="474" key="search.everywhere.popup" timestamp="1583515079893">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
+    <state x="499" y="121" width="672" height="474" key="search.everywhere.popup/0.0.1366.728/1366.-181.2560.1040@0.0.1366.728" timestamp="1583515079893" />
     <state x="2302" y="-8" width="672" height="676" key="search.everywhere.popup/0.0.1366.728/1366.-181.2560.1040@1366.-181.2560.1040" timestamp="1581680718374" />
   </component>
 </project>
