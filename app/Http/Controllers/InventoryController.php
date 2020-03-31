@@ -121,12 +121,12 @@ class InventoryController extends Controller
 
             $responsible = null;
 
-            if (Responsible::where('value', "'" . $item[4] . "'")->where('inventario_id', $inventory->id)->count()) {
-                $responsible = Responsible::where('value', $item[4])->where('inventario_id', $inventory->id)->get();
+            if (Responsible::where('value', "'" . $item[4] . "'")->where('inventory_id', $inventory->id)->count()) {
+                $responsible = Responsible::where('value', $item[4])->where('inventory_id', $inventory->id)->get();
             } else {
                 $responsible = new Responsible();
                 $responsible->value = $item[4];
-                $responsible->inventario_id = $inventory->id;
+                $responsible->inventory_id = $inventory->id;
                 $responsible->save();
             }
 
@@ -135,12 +135,12 @@ class InventoryController extends Controller
              */
             $local = null;
 
-            if (Local::where('value', $item[0])->where('inventario_id', $inventory->id)->count()) {
-                $local = Local::where('value', $item[0])->where('inventario_id', $inventory->id)->get();
+            if (Local::where('value', $item[0])->where('inventory_id', $inventory->id)->count()) {
+                $local = Local::where('value', $item[0])->where('inventory_id', $inventory->id)->get();
             } else {
                 $local = new Local();
                 $local->value = $item[0];
-                $local->inventario_id = $inventory->id;
+                $local->inventory_id = $inventory->id;
                 $local->save();
                 $permission = Permission::create(['name' => 'collect '.$local->value.' - '.$inventory->year]);
             }
