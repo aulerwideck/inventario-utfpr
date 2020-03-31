@@ -17,11 +17,6 @@ cp .env.example .env
 ```
 Dentro do arquivo .env deve ser inseridos as credenciais de acesso ao banco de dados.
 
-Para que seja possivel a criptografia dos dados devemos gerar a chave única da aplicação:
-```
-php artisan key:generate
-```
-
 Agora podemos executar o comando e seguir os passos:
 ```
 php artisan install
