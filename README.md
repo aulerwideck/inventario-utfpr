@@ -17,7 +17,15 @@ cp .env.example .env
 ```
 Dentro do arquivo .env deve ser inseridos as credenciais de acesso ao banco de dados.
 
+Para que seja possivel a criptografia dos dados devemos gerar a chave única da aplicação:
+```
+php artisan key:generate
+```
 
+Agora iremos gerar as tabelas do banco da dados:
+```
+php artisan migrate
+```
 ## Upload de arquivo
 
 O arquivo deve ser no formato csv no seguinte formato:
