@@ -92,7 +92,7 @@
                                                     @endif
                                                     <td>
                                                         @can('read locals')
-                                                            @can('collect local '.$local->id)
+                                                            @can('collect '.$local->value.' - '.$inventory->year)
                                                             <a href="{{ route('collect.home', ['local' => $local ]) }}"
                                                                class="btn btn-primary">Coletar</a>
                                                             @endcan

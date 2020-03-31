@@ -9,6 +9,8 @@ use App\Patrimony;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\In;
+use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\DataTables;
 //use Yajra\Datatables\Facades\Datatables;
 
@@ -43,6 +45,7 @@ class LocalController extends Controller
      */
     public function store(Request $request)
     {
+        $inventory = Inventory::find($request->input('inventory_id'));
         $local = new Local();
 
         $local->value = $request->input('value');
@@ -50,6 +53,8 @@ class LocalController extends Controller
         $local->inventory_id = $request->input('inventory_id');
 
         $local->save();
+
+        $permission = Permission::create(['name' => 'collect '.$local->value.' - '.$inventory->year]);
 
         return redirect('inventory/'.$local->inventory_id)
             ->with('success','Inventário cadastrado com sucesso!');

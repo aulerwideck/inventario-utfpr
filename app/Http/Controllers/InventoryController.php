@@ -10,6 +10,7 @@ use App\Responsible;
 use App\State;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\DataTables;
 
 class InventoryController extends Controller
@@ -141,6 +142,7 @@ class InventoryController extends Controller
                 $local->value = $item[0];
                 $local->inventory_id = $inventory->id;
                 $local->save();
+                $permission = Permission::create(['name' => 'collect '.$local->value.' - '.$inventory->year]);
             }
 
             /**
@@ -1170,39 +1172,3 @@ class InventoryController extends Controller
     }
 
 }
-
-/**
- *
- * $data = array();
- * $data[] = ['data' => 'tombo', 'name' => 'tombo'];
- * $data[] = ['data' => 'tombo_old', 'name' => 'tombo_old'];
- * $data[] = ['data' => 'tombo_proep', 'name' =>'tombo_proep'];
- * $data[] = ['data' => 'description', 'name' => 'description'];
- * $data[] = ['data' => 'observation', 'name' =>'observation'];
- * $data[] = ['data' => 'coletor', 'name' => 'coletor'];
- * $data[] = ['data' => 'estado', 'name' => 'estado'];
- * $data[] = ['data' => 'local_antigo', 'name' => 'local_antigo'];
- * $data[] = ['data' => 'local_novo', 'name' => 'local_novo'];
- * $data[] = ['data' => 'responsible', 'name' => 'responsible'];
- * $data[] = ['data' => 'data', 'name' => 'data', 'searchable' => false];
- *
- * $tabela = array();
- * $tabela[] = ['name' => 'Tombo', 'class' => 'all'];
- * $tabela[] = ['name' => 'Tombo Antigo', 'class' => 'all'];
- * $tabela[] = ['name' => 'Tombo Proep', 'class' =>'all'];
- * $tabela[] = ['name' => 'Descrição', 'class' => 'all'];
- * $tabela[] = ['name' => 'Observação', 'class' =>'all'];
- * $tabela[] = ['name' => 'Coletor', 'class' => 'all'];
- * $tabela[] = ['name' => 'Estado', 'class' => 'all'];
- * $tabela[] = ['name' => 'Local Antigo', 'class' => 'all'];
- * $tabela[] = ['name' => 'Local Coleta', 'class' => 'all'];
- * $tabela[] = ['name' => 'Responsável', 'class' => 'all'];
- * $tabela[] = ['name' => 'Data Coleta', 'class' => 'all'];
- *
- * return view('inventory.relatory.generic')
- * ->with('route', 'inventory.relatory.listSemPatrimonio')
- * ->with('title', 'Relatório de itens Sem Patrimônio')
- * ->with('inventory', $inventory)
- * ->with('data', $data )
- * ->with('tabela', $tabela );
- */
