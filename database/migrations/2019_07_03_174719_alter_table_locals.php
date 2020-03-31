@@ -14,7 +14,7 @@ class AlterTableLocals extends Migration
     public function up()
     {
         Schema::table('locals', function (Blueprint $table) {
-            $table->integer('inventario_id');
+            $table->integer('inventory_id')->after('id');
         });
     }
 
