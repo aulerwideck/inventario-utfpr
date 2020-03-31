@@ -2,7 +2,7 @@
 
 Inventário UTFPR é uma aplicação web que foi desenvolvida em Laravel e tem como finalidade auxiliar a comissão inventariante da UTFPR na coleta dos itens e geração de relatórios.
 
-##Instalação
+## Instalação
 Para iniciar a instalação do sistema de coleta de inventário, devemos fazer o clone do repositório git:
 ```
 git clone https://github.com/aulerwideck/inventario-utfpr.git
@@ -22,9 +22,9 @@ Para que seja possivel a criptografia dos dados devemos gerar a chave única da 
 php artisan key:generate
 ```
 
-Agora iremos gerar as tabelas do banco da dados:
+Agora podemos executar o comando e seguir os passos:
 ```
-php artisan migrate
+php artisan install
 ```
 ## Upload de arquivo
 
