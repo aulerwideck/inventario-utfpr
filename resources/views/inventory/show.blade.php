@@ -93,8 +93,8 @@
                                                     <td>
                                                         @can('read locals')
                                                             @can('collect '.$local->value.' - '.$inventory->year)
-                                                            <a href="{{ route('collect.home', ['local' => $local ]) }}"
-                                                               class="btn btn-primary">Coletar</a>
+                                                                <a href="{{ route('collect.home', ['local' => $local ]) }}"
+                                                                   class="btn btn-primary">Coletar</a>
                                                             @endcan
                                                         @endcan
                                                         <a href="{{ route('local.show', ['local' => $local ]) }}"
@@ -108,24 +108,26 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card card-stats mb-4 shadow">
-                                    <div class="card-body">
-                                        <div class="row align-items-center">
-                                            <div class="col-7">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Coleta via
-                                                    arquivo</h5>
-                                            </div>
-                                            <div class="col-5 text-right">
-                                                <a href="{{ route('collect.archive', ['inventory' => $inventory]) }}"
-                                                   class="btn btn-lg btn-primary">Coleta</a>
+                        @can('archive collect')
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card card-stats mb-4 shadow">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col-7">
+                                                    <h5 class="card-title text-uppercase text-muted mb-0">Coleta via
+                                                        arquivo</h5>
+                                                </div>
+                                                <div class="col-5 text-right">
+                                                    <a href="{{ route('collect.archive', ['inventory' => $inventory]) }}"
+                                                       class="btn btn-lg btn-primary">Coleta</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endcan
                     </div>
                 </div>
             </div>
