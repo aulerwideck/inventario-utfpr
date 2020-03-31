@@ -135,12 +135,12 @@ class InventoryController extends Controller
              */
             $local = null;
 
-            if (Local::where('value', $item[0])->where('inventory_id', $inventory->id)->count()) {
-                $local = Local::where('value', $item[0])->where('inventory_id', $inventory->id)->get();
+            if (Local::where('value', $item[0])->where('inventario_id', $inventory->id)->count()) {
+                $local = Local::where('value', $item[0])->where('inventario_id', $inventory->id)->get();
             } else {
                 $local = new Local();
                 $local->value = $item[0];
-                $local->inventory_id = $inventory->id;
+                $local->inventario_id = $inventory->id;
                 $local->save();
                 $permission = Permission::create(['name' => 'collect '.$local->value.' - '.$inventory->year]);
             }
