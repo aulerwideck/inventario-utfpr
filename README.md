@@ -7,7 +7,7 @@ Para iniciar a instalação do sistema de coleta de inventário, devemos fazer o
 ```
 git clone https://github.com/aulerwideck/inventario-utfpr.git
 ```
-Posteriormente, devemos atualizar as dependências do projeto:
+Posteriormente, devemos acessar a pasta criada e atualizar as dependências do projeto:
 ```
 composer update
 ```
