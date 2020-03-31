@@ -117,7 +117,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -152,7 +152,8 @@
       <workItem from="1582024201312" duration="2033000" />
       <workItem from="1583514861492" duration="2263000" />
       <workItem from="1583773121816" duration="21000" />
-      <workItem from="1583838489755" duration="1727000" />
+      <workItem from="1583838489755" duration="4920000" />
+      <workItem from="1585654190070" duration="17000" />
     </task>
     <servers />
   </component>
@@ -164,10 +165,15 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="421" y="168" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728/1366.-181.2560.1040@0.0.1366.728" timestamp="1583514872546" />
-    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1582036328642">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="2376" y="95" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1583844466091">
+      <screen x="1366" y="-181" width="2560" height="1040" />
+    </state>
+    <state x="2376" y="95" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728/1366.-181.2560.1040@1366.-181.2560.1040" timestamp="1583844466091" />
+    <state x="2234" y="-10" key="FileChooserDialogImpl" timestamp="1583851504831">
+      <screen x="1366" y="-181" width="2560" height="1040" />
     </state>
     <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.728/1366.-181.2560.1040@0.0.1366.728" timestamp="1582036328642" />
+    <state x="2234" y="-10" key="FileChooserDialogImpl/0.0.1366.728/1366.-181.2560.1040@1366.-181.2560.1040" timestamp="1583851504831" />
     <state x="2383" y="432" key="FileChooserDialogImpl/1920.312.1366.728/0.0.1920.1040@1920.312.1366.728" timestamp="1581546934194" />
     <state x="492" y="282" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583515577147">
       <screen x="0" y="0" width="1366" height="728" />

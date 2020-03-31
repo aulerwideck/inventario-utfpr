@@ -82,7 +82,9 @@ Route::middleware(['auth', 'verified'])->group( function () {
     Route::resource('user', 'UserController');
 
     Route::put('role/{role}/connect', ['as' => 'role.connect', 'uses' => 'RoleController@connect']);
+    Route::get('role/search','RoleController@search');
     Route::resource('role', 'RoleController');
 
+    Route::get('permission/search','PermissionController@search');
     Route::resource('permission', 'PermissionController');
 });

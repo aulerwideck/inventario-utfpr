@@ -91,4 +91,17 @@ class PermissionController extends Controller
 
         return redirect()->route('permission.index')->withStatus(__('Permission successfully deleted.'));
     }
+
+    /**
+     * Display a listing of the users
+     *
+     * @return \Illuminate\View\View
+     */
+    public function search()
+    {
+        $query = request('search_text');
+        $model = Permission::where('name', 'LIKE', '%' . $query . '%');
+
+        return view('permissions.index', ['permissions' => $model->paginate($this->sizePage)]);
+    }
 }

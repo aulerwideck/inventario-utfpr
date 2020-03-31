@@ -116,4 +116,17 @@ class RoleController extends Controller
 
         return redirect()->route('role.index')->withStatus(__('Role successfully updated.'));
     }
+
+    /**
+     * Display a listing of the users
+     *
+     * @return \Illuminate\View\View
+     */
+    public function search()
+    {
+        $query = request('search_text');
+        $model = Role::where('name', 'LIKE', '%' . $query . '%');
+
+        return view('roles.index', ['roles' => $model->paginate($this->sizePage)]);
+    }
 }

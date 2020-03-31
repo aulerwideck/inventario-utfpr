@@ -32,6 +32,22 @@
                         @endif
                         <div class="row justify-content-end">
                             {{ $permissions->links() }}
+                            <div class="col-6 text-right">
+                                <form class="form-inline"
+                                      action="/{{ Request::segment(1) }}/search"
+                                      method="get">
+                                    {{ csrf_field() }}
+                                    <div class="col col-lg-8">
+                                        <input class="form-control mr-sm-2" type="search" name="search_text"
+                                               placeholder="Procurar" aria-label="Procurar">
+                                    </div>
+                                    <div class="col col-lg-4">
+                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                                            Procurar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table">

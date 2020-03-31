@@ -92,8 +92,10 @@
                                                     @endif
                                                     <td>
                                                         @can('read locals')
+                                                            @can('collect local '.$local->id)
                                                             <a href="{{ route('collect.home', ['local' => $local ]) }}"
                                                                class="btn btn-primary">Coletar</a>
+                                                            @endcan
                                                         @endcan
                                                         <a href="{{ route('local.show', ['local' => $local ]) }}"
                                                            class="btn btn-secondary">Ver local</a></td>

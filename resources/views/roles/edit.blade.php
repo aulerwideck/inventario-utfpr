@@ -54,16 +54,14 @@
                             <h4 class="card-title">{{ __('Connect Permissions') }}</h4>
                             <p class="card-category"></p>
                         </div>
-                        <div class="card-body ">
+                        <div class="row card-body ">
                             @foreach($permissions as $permission)
-                                <div class="row">
-                                    <label class="col-sm-2 col-form-label">{{ __($permission->name) }}</label>
-                                    <div class="col-sm-7">
-                                        <div
-                                            class="form-group{{ $errors->has($permission->name) ? ' has-danger' : '' }}">
-                                            <input type="checkbox" id="{{str_replace(' ', '_', $permission->name)}}"
-                                                   name="{{str_replace(' ', '_', $permission->name)}}" {{$role->hasPermissionTo($permission->name) ? 'checked' : ''}}>
-                                        </div>
+                                <div class="row col-sm-4">
+                                    <div
+                                        class="form-group{{ $errors->has($permission->name) ? ' has-danger' : '' }}">
+                                        <input type="checkbox" id="{{str_replace(' ', '_', $permission->name)}}"
+                                               name="{{str_replace(' ', '_', $permission->name)}}" {{$role->hasPermissionTo($permission->name) ? 'checked' : ''}}>
+                                        <label class="col-form-label">{{ __($permission->name) }}</label>
                                     </div>
                                 </div>
                             @endforeach
