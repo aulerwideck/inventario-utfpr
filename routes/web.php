@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'inventory'], function(){
+Route::group(['prefix' => 'inventory', 'middleware' => ['auth']], function(){
     Route::get('/new', 'InventoryController@create')->name('inventory.create')->middleware('permission:create inventories');
     Route::get('/{inventory}', 'InventoryController@show')->name('inventory.show')->middleware('permission:read inventories');
     Route::get('/{inventory}/edit', 'InventoryController@edit')->name('inventory.edit')->middleware('permission:update inventories');
@@ -51,7 +51,7 @@ Route::group(['prefix' => 'inventory'], function(){
     Route::post('/{inventory}', 'InventoryController@update')->name('inventory.update');
 });
 
-Route::group(['prefix' => 'collect'], function(){
+Route::group(['prefix' => 'collect', 'middleware' => ['auth']], function(){
     Route::get('/ajax', 'CollectController@ajax');
     Route::get('/ajaxDualCollect', 'CollectController@ajaxDualCollect');
     Route::get('/{local}', 'CollectController@index')->name('collect.home');
@@ -62,7 +62,7 @@ Route::group(['prefix' => 'collect'], function(){
     Route::post('/{collect}', 'CollectController@update')->name('collect.update');
 });
 
-Route::group(['prefix' => 'local'], function(){
+Route::group(['prefix' => 'local', 'middleware' => ['auth']], function(){
 
     Route::get('/new/{inventory}', 'LocalController@create')->name('local.create')->middleware('permission:create locals');
     Route::get('/{local}/', 'LocalController@show')->name('local.show')->middleware('permission:read locals');
