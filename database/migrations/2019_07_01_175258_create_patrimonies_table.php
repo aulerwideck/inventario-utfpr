@@ -20,7 +20,7 @@ class CreatePatrimoniesTable extends Migration
             $table->integer('responsible_id');
             $table->integer('inventory_id');
             $table->integer('tombo');
-            $table->integer('tombo_old');
+            $table->integer('tombo_old')->nullable();
             $table->string('description',500);
             $table->timestamps();
         });
