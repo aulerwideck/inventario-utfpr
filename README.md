@@ -15,7 +15,7 @@ Feito isso, iremos configurar os acessos ao banco de dados, para isso devemos fa
 ```
 cp .env.example .env
 ```
-Dentro do arquivo .env deve ser inseridos as credenciais de acesso ao banco de dados.
+Dentro do arquivo .env deve ser inseridos as credenciais de acesso ao banco de dados e outras informações, como nome do projeto.
 
 Agora podemos executar o comando e seguir os passos:
 ```
