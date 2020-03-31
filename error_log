@@ -1,2 +1,0 @@
-[31-Mar-2020 12:32:12 UTC] PHP Fatal error:  Allowed memory size of 1610612736 bytes exhausted (tried to allocate 268435456 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/DependencyResolver/Solver.php on line 220
-[31-Mar-2020 12:52:11 UTC] PHP Parse error:  syntax error, unexpected '?' in /home/tirecontrol/public_html/inventario-utfpr/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php on line 500
