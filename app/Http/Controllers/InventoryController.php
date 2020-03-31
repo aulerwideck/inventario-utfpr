@@ -121,8 +121,8 @@ class InventoryController extends Controller
 
             $responsible = null;
 
-            if (Responsible::where('value', "'" . $item[4] . "'")->where('inventory_id', $inventory->id)->count()) {
-                $responsible = Responsible::where('value', $item[4])->where('inventory_id', $inventory->id)->get();
+            if (Responsible::where('value', "'" . $item[4] . "'")->where('inventario_id', $inventory->id)->count()) {
+                $responsible = Responsible::where('value', $item[4])->where('inventario_id', $inventory->id)->get();
             } else {
                 $responsible = new Responsible();
                 $responsible->value = $item[4];
