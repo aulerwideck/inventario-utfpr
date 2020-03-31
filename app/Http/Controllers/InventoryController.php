@@ -126,7 +126,7 @@ class InventoryController extends Controller
             } else {
                 $responsible = new Responsible();
                 $responsible->value = $item[4];
-                $responsible->inventory_id = $inventory->id;
+                $responsible->inventario_id = $inventory->id;
                 $responsible->save();
             }
 
