@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Input;
 Route::get('/', function () {
     return redirect('home');
 });
-
+Route::fallback(function () {
+    abort(404);
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
