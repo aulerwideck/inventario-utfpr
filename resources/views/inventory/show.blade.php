@@ -91,14 +91,14 @@
                                                         <td class="d-none d-sm-table-cell"> 0%</td>
                                                     @endif
                                                     <td>
+                                                        <a href="{{ route('local.show', ['local' => $local ]) }}"
+                                                           class="btn btn-secondary">Ver local</a></td>
                                                         @can('read locals')
                                                             @can('collect '.$local->value.' - '.$inventory->year)
                                                                 <a href="{{ route('collect.home', ['local' => $local ]) }}"
                                                                    class="btn btn-primary">Coletar</a>
                                                             @endcan
                                                         @endcan
-                                                        <a href="{{ route('local.show', ['local' => $local ]) }}"
-                                                           class="btn btn-secondary">Ver local</a></td>
                                                 </tr>
                                             @endforeach
                                             </tbody>

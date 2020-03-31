@@ -61,7 +61,7 @@
                                         class="form-group{{ $errors->has($permission->name) ? ' has-danger' : '' }}">
                                         <input type="checkbox" id="{{str_replace(' ', '_', $permission->name)}}"
                                                name="{{str_replace(' ', '_', $permission->name)}}" {{$role->hasPermissionTo($permission->name) ? 'checked' : ''}}>
-                                        <label class="col-form-label">{{ __($permission->name) }}</label>
+                                        <label for="{{str_replace(' ', '_', $permission->name)}}" class="col-form-label">{{ __($permission->name) }}</label>
                                     </div>
                                 </div>
                             @endforeach
