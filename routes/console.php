@@ -20,10 +20,11 @@ Artisan::command('inspire', function () {
 Artisan::command('install', function () {
     Artisan::call('key:generate');
 
-    if ($this->confirm('Deseja criar as tabelas?')) {
+    if ($this->confirm('Deseja criar as tabelas do banco de dados?')) {
         Artisan::call('migrate');
         $this->info('As tabelas foram criadas.');
     }
+
     if ($this->confirm('Deseja inserir o conteúdo predefinido?')) {
         $bar = $this->output->createProgressBar(1);
 
@@ -35,7 +36,8 @@ Artisan::command('install', function () {
         $bar->finish();
         $this->line('Os dados foram inseridos.');
     }
-
+    
+    $this->info('Não existe um usuário pre definido.');
     while($this->confirm('Deseja adicionar um novo usuário?')){
         $name = $this->ask('Qual o nome do usuário?');
         $email = $this->ask('Qual o email do usuário?');
