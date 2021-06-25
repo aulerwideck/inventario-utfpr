@@ -121,6 +121,13 @@ class InventoryController extends Controller
 
             $responsible = null;
 
+            /**
+             * Alterado 25/06/2021
+             *
+             * Remover apostrofos concatenados para importar corretamente
+             * Thiago Auler Wideck
+             */
+//            if (Responsible::where('value', "'" . $item[4] . "'")->where('inventory_id', $inventory->id)->count()) {
             if (Responsible::where('value', "'" . $item[4] . "'")->where('inventory_id', $inventory->id)->count()) {
                 $responsible = Responsible::where('value', $item[4])->where('inventory_id', $inventory->id)->get();
             } else {
