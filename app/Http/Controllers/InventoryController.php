@@ -182,7 +182,7 @@ class InventoryController extends Controller
             $patrimony = null;
             $state = State::where('value', 'BOM')->get();
             $local = Local::where('value', $item[0])->where('inventory_id', $inventory->id)->get();
-            $responsible = Responsible::where('value', $item[4])->get();
+            $responsible = Responsible::where('value', $item[4])->where('inventory_id', $inventory->id)->get();
 
             if (Patrimony::where('tombo', $item[2])->where('inventory_id', $inventory->id)->count()) {
                 $patrimony = Patrimony::where('tombo', $item[2])->where('inventory_id', $inventory->id)->get();
