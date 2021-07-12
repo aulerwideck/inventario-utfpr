@@ -208,11 +208,11 @@
                             @enderror
                         </div>
 
-                        <div class="d-block d-sm-none">
+                        <div class="d-block">
                             <br>
                             <div class="row justify-content-center">
                                 <div class="col-12 col-sm-4">
-                                    <input type="submit" class="btn btn-success btn-block" value="Buscar"><br>
+                                    <input type="submit" class="btn btn-success btn-block" value="Salvar"><br>
                                 </div>
                             </div>
                         </div>
