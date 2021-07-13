@@ -116,7 +116,7 @@ class RoleController extends Controller
         $permissions = Permission::all();
         $role->revokePermissionTo($permissions);
         foreach ($permissions as $permission) {
-            if ($request->get(str_replace(' ', '_', $permission->name))) {
+            if ($request->get($permission->id)) {
                 try {
                     $role->givePermissionTo($permission);
                 } catch (\Exception $e) {
