@@ -122,11 +122,8 @@ class RoleController extends Controller
                 } catch (\Exception $e) {
                     dd($e);
                 }
-            } else {
-                echo $permission->name . $permission->id . '<br>';
             }
         }
-        dd($request);
 
         return redirect()->route('role.index')->withStatus(__('Role successfully updated.'));
     }
