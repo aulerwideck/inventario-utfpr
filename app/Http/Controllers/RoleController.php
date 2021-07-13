@@ -34,7 +34,7 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Role $model)
@@ -64,7 +64,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
-        return view('roles.edit', compact(['role','permissions']));
+        return view('roles.edit', compact(['role', 'permissions']));
     }
 
     /**
@@ -122,9 +122,8 @@ class RoleController extends Controller
                 } catch (\Exception $e) {
                     dd($e);
                 }
-            }
-            else{
-                echo $permission->name . '<br>';
+            } else {
+                echo $permission->name . $permission->id . '<br>';
             }
         }
         dd($request);
