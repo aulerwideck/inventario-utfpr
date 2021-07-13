@@ -124,7 +124,7 @@ class RoleController extends Controller
                 }
             }
             else{
-                echo $permission->name . PHP_EOL;
+                echo $permission->name . '<br>';
             }
         }
         dd();
