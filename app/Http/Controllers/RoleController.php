@@ -104,13 +104,24 @@ class RoleController extends Controller
      */
     public function connect(Request $request, Role $role)
     {
+//        $permissions = Permission::all();
+//        $role->revokePermissionTo($permissions);
+//        foreach ($permissions as $permission)
+//        {
+//            if($request->get(str_replace(' ', '_', $permission->name)))
+//            {
+//                $role->givePermissionTo($permission);
+//            }
+//        }
         $permissions = Permission::all();
         $role->revokePermissionTo($permissions);
-        foreach ($permissions as $permission)
-        {
-            if($request->get(str_replace(' ', '_', $permission->name)))
-            {
-                $role->givePermissionTo($permission);
+        foreach ($permissions as $permission) {
+            if ($request->get(str_replace(' ', '_', $permission->name))) {
+                try {
+                    $role->givePermissionTo($permission);
+                } catch (\Exception $e) {
+                    dd($e);
+                }
             }
         }
 
