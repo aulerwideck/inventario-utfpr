@@ -124,7 +124,7 @@ class RoleController extends Controller
                 }
             }
             else{
-                dd($permission, $request);
+                var_dump($permission);
             }
         }
 
