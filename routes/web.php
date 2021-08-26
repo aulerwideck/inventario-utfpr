@@ -58,9 +58,11 @@ Route::group(['prefix' => 'collect', 'middleware' => ['auth']], function(){
     Route::get('/ajaxDualCollect', 'CollectController@ajaxDualCollect');
     Route::get('/{local}', 'CollectController@index')->name('collect.home');
     Route::get('/{inventory}/archive', 'CollectController@archive')->name('collect.archive');
+    Route::get('/{inventory}/archive_old', 'CollectController@archive_old')->name('collect.archive_old');
 
     Route::post('/', 'CollectController@store')->name('collect.store');
     Route::post('/{inventory}', 'CollectController@storeArchive')->name('collect.store.archive');
+    Route::post('/antigo/{inventory}', 'CollectController@storeArchiveTomboAntigo')->name('collect.store.archive_old');
     Route::post('/{collect}', 'CollectController@update')->name('collect.update');
 });
 

@@ -34,6 +34,14 @@ class CollectController extends Controller
         return view('collect.archive', ['locals' => $locals, 'inventory' => $inventory, 'responsibles' => $responsibles, 'states' => $states]);
     }
 
+    public function archive_old(Inventory $inventory)
+    {
+        $locals = $inventory->locals()->get();
+        $states = State::get();
+        $responsibles = $inventory->responsibles()->get();
+        return view('collect.archive_old', ['locals' => $locals, 'inventory' => $inventory, 'responsibles' => $responsibles, 'states' => $states]);
+    }
+
     public function storeArchive(Request $request, Inventory $inventory)
     {
         request()->validate([
@@ -64,6 +72,55 @@ class CollectController extends Controller
                 if($patrimony){
                     $collect = new Collect();
                     $collect->tombo = $item[0];
+                    $collect->local_id = $local->id;
+                    $collect->inventory_id = $inventory->id;
+                    $collect->patrimony_id = $patrimony->id;
+                    $collect->user_id = Auth::user()->id;
+                    $collect->responsible_id = $responsible->id;
+                    $collect->state_id = $state->id;
+                    $collect->save();
+                    $cont++;
+                    $patrimony->collected = 1;
+                    $patrimony->save();
+                }
+            }
+        }
+
+        return view('inventory.show')
+            ->with('inventory', $inventory)
+            ->with('success', $cont.' itens importados.');
+    }
+
+    public function storeArchiveTomboAntigo(Request $request, Inventory $inventory)
+    {
+        request()->validate([
+            'image' => 'required',
+        ]);
+
+        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
+
+        request()->image->move(public_path('uploads'), $imageName);
+
+        $filename = 'uploads/' . $imageName;
+
+        $csv = file_get_contents($filename);
+
+        $array = array_map(function ($v) {
+            return str_getcsv($v, ";");
+        }, explode("\n", $csv));
+
+        $local = Local::find($request->input('local'));
+        $responsible = Responsible::find($request->input('responsible'));
+        $state = State::find($request->input('state'));
+
+        $cont = 0;
+        foreach ($array as $item) {
+            if($item[0] != null){
+                $patrimony = $inventory->patrimonies()->where('tombo_old', '=', $item[0])>first();
+//                Patrimony::where('tombo', '=', $item[0])->where('inventory_id', $inventory->id)->first();
+                if($patrimony){
+                    $collect = new Collect();
+                    $collect->tombo_old = $item[0];
                     $collect->local_id = $local->id;
                     $collect->inventory_id = $inventory->id;
                     $collect->patrimony_id = $patrimony->id;

@@ -128,6 +128,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card card-stats mb-4 shadow">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col-7">
+                                                    <h5 class="card-title text-uppercase text-muted mb-0">Coleta via
+                                                        arquivo - Tombo Antigo</h5>
+                                                </div>
+                                                <div class="col-5 text-right">
+                                                    <a href="{{ route('collect.archive_old', ['inventory' => $inventory]) }}"
+                                                       class="btn btn-lg btn-primary">Coleta</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endcan
                     </div>
                 </div>
