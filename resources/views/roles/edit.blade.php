@@ -57,8 +57,7 @@
                         <div class="row card-body ">
                             @foreach($permissions as $permission)
                                 <div class="row col-sm-4">
-                                    <div
-                                        class="form-group{{ $errors->has($permission->name) ? ' has-danger' : '' }}">
+                                    <div class="form-group{{ $errors->has($permission->name) ? ' has-danger' : '' }}">
                                         <input type="checkbox" id="{{$permission->id}}"
                                                name="{{$permission->id}}" {{$role->hasPermissionTo($permission->name) ? 'checked' : ''}}>
                                         <label for="{{$permission->id}}" class="col-form-label">{{ __($permission->name) }}</label>
