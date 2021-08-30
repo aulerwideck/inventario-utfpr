@@ -67,7 +67,7 @@ class CollectController extends Controller
         $cont = 0;
         foreach ($array as $item) {
             if($item[0] != null){
-                $patrimony = $inventory->patrimonies()->where('tombo', '=', $item[0])>first();
+                $patrimony = $inventory->patrimonies()->where('tombo', '=', $item[0])->first();
 //                Patrimony::where('tombo', '=', $item[0])->where('inventory_id', $inventory->id)->first();
                 if($patrimony){
                     $collect = new Collect();
@@ -116,7 +116,7 @@ class CollectController extends Controller
         $cont = 0;
         foreach ($array as $item) {
             if($item[0] != null){
-                $patrimony = $inventory->patrimonies()->where('tombo_old', '=', $item[0])>first();
+                $patrimony = $inventory->patrimonies()->where('tombo_old', '=', $item[0])->first();
 //                Patrimony::where('tombo', '=', $item[0])->where('inventory_id', $inventory->id)->first();
                 if($patrimony){
                     $collect = new Collect();
